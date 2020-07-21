@@ -1,8 +1,9 @@
 let keys = {};
-if(process.env.NODE_ENV !== 'production')
-    keys = require('./dev');
+
 if(process.env.NODE_ENV === 'production')
-    kyes = require('./prod');
+    keys = require('./prod');
+else
+    keys = require('./dev');
 
     
 module.exports = keys;
