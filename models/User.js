@@ -3,6 +3,7 @@ const { promisify } = require('util');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {jwtSecret} = require('../config/keys');
+const _ = require('lodash');
 
 const SALT = 10;
 const hash = promisify(bcrypt.hash);
@@ -36,6 +37,10 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.generateAuthToken = function(){
     const user = this;
     return jwt.sign({_id:user._id.toHexString(), role:user.role},jwtSecret);
+};
+userSchema.methods.toJSON = function(){
+    const user = this;
+    return _.pick(user,['email','role','name'])
 };
 /**
  * Finds by token

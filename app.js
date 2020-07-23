@@ -1,10 +1,10 @@
+require('./db/mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
 const app = express();
-const {usersRoutes} = require('./routes')
-require('./db/mongoose');
+const {usersRoutes,quizzesRoutes} = require('./routes')
 
 app.use(bodyParser.json());
 app.use(cookieSession({
@@ -12,7 +12,7 @@ app.use(cookieSession({
     keys: [keys.cookieSecret]
 }));
 
-app.use('/api',usersRoutes);
+app.use('/api',usersRoutes,quizzesRoutes);
 const PORT = 5000 || process.env.PORT;
 
 if(process.env.NODE_ENV === 'production'){
