@@ -59,6 +59,11 @@ userSchema.statics.findByToken = function(token){
         role: decoded.role
     });
 }
+/**
+ * static method to find credentials
+ * @param {*} email 
+ * @param {*} password 
+ */
 userSchema.statics.findByCredentials = async function(email,password){
     const User = this;
     const user = await User.findOne({email});
