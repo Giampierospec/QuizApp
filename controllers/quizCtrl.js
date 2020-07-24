@@ -7,7 +7,7 @@ const {body, validationResult} = require('express-validator');
  * @param {*} res 
  * @param {*} next 
  */
-const getQuizzes = async (req,res,next)=>{
+const getFilledQuizzes = async (req,res,next)=>{
     try{
         const fillQuiz = await FillQuiz.find({ _userId: req.user._id });
         return res.send(fillQuiz);
@@ -18,25 +18,33 @@ const getQuizzes = async (req,res,next)=>{
 
 };
 const validate = (method)=>{
-  switch(method){
-      case'createQuizzes':{
-          return [
-              body('title').notEmpty().withMessage('Title is required'),
-              body('questions').isArray().isLength({min:1})
-          ]
-      }
-  }  
+  try{
+      switch (method) {
+          case 'createQuizzes': {
+              return [
+                  body('title', 'Title is required').notEmpty(),
+                  body('questions', 'Must have at least one question').isArray().isLength({ min: 1 })
+              ]
+          }
+      }  
+  }catch(e){
+      return e;
+  }
 };
 const createQuizzes = async (req,res,next)=>{
     try {
         const errors = validationResult(req);
-        if(!errors.isEmpty())
-            return res.send(400).send(errors.array().map(x => x.msg));
-        
         const {title, questions} = req.body;
-        const quiz = new Quiz({
+        let quiz = await Quiz.findOne({title});
+        if(quiz)
+            return res.status(400).send(`The quiz with title ${title} already exists!`);
+        if(!errors.isEmpty())
+            return res.status(400).send(errors.array().map(x => x.msg));
+        
+         quiz = new Quiz({
             title,
-            questions
+            questions,
+            _userId: req.user._id
         });
         res.send(await quiz.save());
 
@@ -46,11 +54,37 @@ const createQuizzes = async (req,res,next)=>{
         res.status(400).send(e);
     }
 };
+const getQuizzesToFill = (req,res,next)=>{
+    try {
+        res.send(await Quiz.find());
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
+const getQuizzes = (req,res,next)=>{
+    try{
+        res.send(await Quiz.find({_userId:req.user._id}));
+    }catch(err){
+        res.status(400).send(err);
+    }
+}
+
+const getQuizToFill = (req,res,next)=>{
+    const {id} = req.params.id;
+    try {
+        return (await Quiz.findById(id));
+    } catch (error) {
+        res.status(400).send(error);
+    }
+};
 
 
 
 module.exports = {
-    getQuizzes,
+    getFilledQuizzes,
     createQuizzes,
-    validate
+    validate,
+    getQuizzesToFill,
+    getQuizzes,
+    getQuizToFill
 };

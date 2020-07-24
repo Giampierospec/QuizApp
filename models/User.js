@@ -40,7 +40,7 @@ userSchema.methods.generateAuthToken = function(){
 };
 userSchema.methods.toJSON = function(){
     const user = this;
-    return _.pick(user,['email','role','name'])
+    return _.pick(user,['_id','email','role','name'])
 };
 /**
  * Finds by token
