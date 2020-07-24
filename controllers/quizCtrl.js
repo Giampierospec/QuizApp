@@ -20,12 +20,11 @@ const getFilledQuizzes = async (req,res,next)=>{
 const validate = (method)=>{
   try{
       switch (method) {
-          case 'createQuizzes': {
+          case 'createQuizzes': 
               return [
                   body('title', 'Title is required').notEmpty(),
                   body('questions', 'Must have at least one question').isArray().isLength({ min: 1 })
-              ]
-          }
+              ];
       }  
   }catch(e){
       return e;
@@ -54,22 +53,37 @@ const createQuizzes = async (req,res,next)=>{
         res.status(400).send(e);
     }
 };
-const getQuizzesToFill = (req,res,next)=>{
+const getQuizzesToFill = async (req,res,next)=>{
     try {
         res.send(await Quiz.find());
     } catch (e) {
         res.status(400).send(e);
     }
 }
-const getQuizzes = (req,res,next)=>{
+const getQuizzes = async (req,res,next)=>{
     try{
         res.send(await Quiz.find({_userId:req.user._id}));
     }catch(err){
         res.status(400).send(err);
     }
 }
+const fillQuiz = async (req,res,next)=>{
+  try{
+      const { title, questions } = req.body;
+      const quizFill = new FillQuiz({
+          title,
+          questions
+      });
+      res.send(await quizFill.save());
+  }
+  catch(e){
+      res.status(400).send(e);
+  }
 
-const getQuizToFill = (req,res,next)=>{
+
+};
+
+const getQuizToFill = async (req,res,next)=>{
     const {id} = req.params.id;
     try {
         return (await Quiz.findById(id));
@@ -86,5 +100,6 @@ module.exports = {
     validate,
     getQuizzesToFill,
     getQuizzes,
-    getQuizToFill
+    getQuizToFill,
+    fillQuiz
 };
