@@ -1,14 +1,12 @@
 require('./db/mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
 const app = express();
 const {usersRoutes,quizzesRoutes} = require('./routes')
 
 app.use(bodyParser.json());
-app.use(expressValidator);
 app.use(cookieSession({
     maxAge: 60000 * 24,
     keys: [keys.cookieSecret]

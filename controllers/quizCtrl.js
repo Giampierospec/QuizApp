@@ -33,6 +33,15 @@ const createQuizzes = async (req,res,next)=>{
         if(!errors.isEmpty())
             return res.send(400).send(errors.array().map(x => x.msg));
         
+        const {title, questions} = req.body;
+        const quiz = new Quiz({
+            title,
+            questions
+        });
+        res.send(await quiz.save());
+
+        
+        
     } catch (e) {
         res.status(400).send(e);
     }

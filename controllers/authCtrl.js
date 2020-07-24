@@ -11,7 +11,7 @@ try{
     const user = await User.findByToken(token);
     if (!user)
         return res.status(404).send('User not found');
-    req.user = user;
+    req.user = user.toJSON();
     next();
 
 }
@@ -19,6 +19,12 @@ catch(e){
     return res.status(401).send('Not Logged in');
 }
 
+}
+const isAdmin = async (req,res,next)=>{
+    if (req.user.role !== 'admin')
+        return res.status(401).send('Not an admin to enter this view');
+        
+    next();
 }
 /**
  * Logins the user
@@ -87,5 +93,6 @@ module.exports = {
     getCurrentUser,
     loginUser,
     createUser,
-    logout
+    logout,
+    isAdmin
 };
