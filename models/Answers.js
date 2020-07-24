@@ -1,7 +1,7 @@
 const {Schema} = require('mongoose');
 
 const answerSchema = new Schema({
-    description:{type:String},
+    description:{type:String, trim:true},
     correct:{type:Boolean, default:false}
 });
 

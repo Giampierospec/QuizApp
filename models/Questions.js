@@ -1,7 +1,7 @@
 const {Schema} = require('mongoose');
 const answerSchema = require('./Answers');
 const questionSchema = new Schema({
-    question:{type:String},
+    question:{type:String, trim:true},
     options:[answerSchema],
     points:{type:Number}
 });
