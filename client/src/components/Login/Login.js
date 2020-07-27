@@ -3,13 +3,16 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
 import LoginForm from './LoginForm';
-import {loginUser, fetchUser} from '../../actions';
+import {loginUser} from '../../actions';
 class Login extends Component {
-    async componentDidMount(){
-        await this.props.fetchUser();
+     componentDidMount(){
         if(!_.isEmpty(this.props.auth))
             this.props.history.push('/');
 
+    }
+    componentDidUpdate(){
+        if (!_.isEmpty(this.props.auth))
+            this.props.history.push('/');
     }
     submitLogin = (values) => {
        this.props.loginUser(values,this.props.history);
@@ -32,5 +35,5 @@ class Login extends Component {
     }
 }
 const mapStateToProps = ({auth})=>({auth});
-export default connect(mapStateToProps,{loginUser, fetchUser})(withRouter(Login));
+export default connect(mapStateToProps,{loginUser})(withRouter(Login));
 

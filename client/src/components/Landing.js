@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
+import _ from 'lodash';
 class Landing extends Component{
     render(){
         return(
@@ -13,10 +14,15 @@ class Landing extends Component{
                                 This App is a practice to Make some dynamic quizzes and answering them
                             </p>
                         </div>
+                        <div className="card-footer">
+                            <button disabled={this.props.auth.role !== 'admin'} className="btn btn-primary">create Quiz</button>
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 }
-export default Landing;
+
+const mapStateToProps = ({auth})=> ({auth});
+export default connect(mapStateToProps)(Landing);

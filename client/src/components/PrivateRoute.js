@@ -8,7 +8,6 @@ class PrivateRoute extends Component{
     async componentDidMount(){
        await this.props.fetchUser();
     }
-    
     render(){
         const { path, children, auth} = this.props;
         return (
