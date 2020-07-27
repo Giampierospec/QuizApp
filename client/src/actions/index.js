@@ -9,7 +9,7 @@ const renderError = (e)=>{
     Swal.fire({
         title: "An error has ocurred",
         icon: "error",
-        text: err
+        html: err
     });
 };
 
@@ -31,4 +31,15 @@ export const loginUser = (values, history) => async dispatch =>{
     catch (e) {
         renderError(e);
     } 
+};
+
+export const createUser = (values,history) => async dispatch =>{
+    try {
+        const res = await axios.post('/api/users', values);
+        dispatch({ type: types.FETCH_USER, payload: res.data });
+        history.push('/login');
+        
+    } catch (e) {
+       renderError(e) ;
+    }   
 };

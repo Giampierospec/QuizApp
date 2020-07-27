@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import _ from 'lodash';
 import LoginForm from './LoginForm';
 import {loginUser, fetchUser} from '../../actions';
@@ -23,7 +23,8 @@ class Login extends Component {
                             <h4 className="card-title"> Login</h4>
                         </div>
                         <div className="card-body">
-                            <LoginForm submitForm={this.submitLogin}/>
+                            <LoginForm submitForm={this.submitLogin} btn="Login"/>
+                            <Link className="text-center" to="/register">No tiene cuenta, cree una aqui</Link>
                         </div>
                     </div>
                 </div>
