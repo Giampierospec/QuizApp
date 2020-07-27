@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import {BrowserRouter} from 'react-router-dom';
 import Header from './Header';
-import Landing from './Landing';
-import Login from './Login/Login'
+import Paths from './Paths';
 
 class App extends Component{
     render(){
@@ -11,12 +9,7 @@ class App extends Component{
             <div className="container-fluid">
                 <BrowserRouter>
                     <Header/>
-                    <Switch>
-                        <PrivateRoute path="/" exact>
-                            <Landing/>
-                        </PrivateRoute>
-                        <Route path="/login" component={Login}/>
-                    </Switch>
+                   <Paths/>
                 </BrowserRouter>
                 <br/>
             </div>

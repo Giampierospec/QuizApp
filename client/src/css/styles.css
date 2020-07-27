@@ -1,3 +1,18 @@
 .margin-from-top{
     margin-top: 5%;
 }
+
+.routes-enter{
+    opacity:0;
+}
+.routes-enter-active{
+    opacity:1;
+    transition: opacity 500ms ease-in;
+}
+.routes-exit{
+    opacity:1;
+}
+.routes-exit-active{
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+}

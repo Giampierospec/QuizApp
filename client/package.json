@@ -18,11 +18,11 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0",
-    "sweetalert2": "^9.17.0",
-    "transition-group": "0.0.2"
+    "sweetalert2": "^9.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
