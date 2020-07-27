@@ -80,7 +80,7 @@ const createUser = async(req,res,next)=>{
  * @param {*} next 
  */
 const getCurrentUser = (req,res,next)=>{
-    res.send(req.user.toJSON());
+    res.send(req.user);
 };
 
 
