@@ -4,9 +4,11 @@ import {connect} from 'react-redux';
 import {fetchUser} from '../actions'
 import _ from 'lodash';
 class PrivateRoute extends Component{
-    componentDidMount(){
-        this.props.fetchUser();
+
+    async componentDidMount(){
+       await this.props.fetchUser();
     }
+    
     render(){
         const { path, children, auth} = this.props;
         return (

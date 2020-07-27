@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
 import LoginForm from './LoginForm';
-import {loginUser} from '../../actions';
+import {loginUser, fetchUser} from '../../actions';
 class Login extends Component {
-    componentDidMount(){
+    async componentDidMount(){
+        await this.props.fetchUser();
         if(!_.isEmpty(this.props.auth))
             this.props.history.push('/');
 
@@ -31,5 +32,5 @@ class Login extends Component {
     }
 }
 const mapStateToProps = ({auth})=>({auth});
-export default connect(mapStateToProps,{loginUser})(withRouter(Login));
+export default connect(mapStateToProps,{loginUser, fetchUser})(withRouter(Login));
 
