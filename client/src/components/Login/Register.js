@@ -14,7 +14,7 @@ class Register  extends Component{
                 <div className="col-sm-8 offset-sm-2">
                     <div className="card">
                         <div className="card-header bg-secondary text-white">
-                            <h4 className="card-title"> Login</h4>
+                            <h4 className="card-title"> Register</h4>
                         </div>
                         <div className="card-body">
                             <LoginForm submitForm={this.submitRegister} btn="register"/>

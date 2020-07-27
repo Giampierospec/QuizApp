@@ -24,7 +24,11 @@ class Login extends Component {
                         </div>
                         <div className="card-body">
                             <LoginForm submitForm={this.submitLogin} btn="Login"/>
-                            <Link className="text-center" to="/register">No tiene cuenta, cree una aqui</Link>
+                            <div className="row">
+                                <div className="col-sm-8 offset-sm-2">
+                                    <Link className="text-center" to="/register"> Don't have an account, click here!</Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
