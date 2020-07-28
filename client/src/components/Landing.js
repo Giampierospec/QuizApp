@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import _ from 'lodash';
 class Landing extends Component{
     render(){
@@ -15,7 +16,7 @@ class Landing extends Component{
                             </p>
                         </div>
                         <div className="card-footer">
-                            <button disabled={this.props.auth.role !== 'admin'} className="btn btn-primary">create Quiz</button>
+                            <Link disabled={this.props.auth.role !== 'admin'} to='/create' className="btn btn-primary">create Quiz</Link>
                         </div>
                     </div>
                 </div>

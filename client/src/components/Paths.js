@@ -5,6 +5,8 @@ import Landing from './Landing';
 import Login from './Login/Login';
 import Register from './Login/Register';
 import {TransitionGroup, CSSTransition } from 'react-transition-group';
+import AdminRoute from './AdminRoute';
+import Create from './Quiz/Create';
 const Paths = withRouter(({location})=>{
     return(
         <TransitionGroup>
@@ -17,6 +19,9 @@ const Paths = withRouter(({location})=>{
                     <PrivateRoute path="/" exact>
                         <Landing />
                     </PrivateRoute>
+                    <AdminRoute path="/create">
+                        <Create/>
+                    </AdminRoute>   
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
                 </Switch>
