@@ -1,4 +1,4 @@
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import React from 'react';
 import QuizField from '../components/Quiz/QuizField';
 import CheckBoxField from '../components/Quiz/CheckBoxField';
@@ -15,8 +15,13 @@ export const renderField = (options) => {
         component={QuizField}
     />);
 };
-const seeOnChange = (e, index) => {
-    const elements = document.getElementsByClassName(`correct-${index}`);
+export const renderFields = (options)=>{
+    return (<FieldArray
+        {...options}
+    />);
+}
+const seeOnChange = (e, option) => {
+    const elements = document.getElementsByClassName(`correct-${option}`);
     for (let i = 0; i <= elements.length; i++) {
         if (e.currentTarget.checked && e.currentTarget.getAttribute('name') !== elements[i]?.getAttribute('name')) {
             if (elements[i]) {

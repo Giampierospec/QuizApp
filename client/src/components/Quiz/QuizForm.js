@@ -2,20 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm} from 'redux-form';
 import { faHeading, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { questions, renderField } from '../../utils/createQuiz.util';
+import { questions, renderField, renderFields } from '../../utils/createQuiz.util';
 import Question from './Question';
 class QuizForm extends Component {
-    state = { questions:[]}
-    renderQuestions = () => {
-        const setQuestions = this.state.questions
-            .concat(questions())
-            .map((x, i) => {
-                return (
-                    <Question index={i} key={i} onRenderAnswers={this.renderAnswers}/>
-                )
-            });
-        this.setState({ questions: setQuestions });
-    }
     render() {
         return (
             <div className="row margin-from-top">
@@ -34,9 +23,15 @@ class QuizForm extends Component {
                                     icon: faHeading,
                                     formClass: 'form-control'
                                 })}
-                                <h5 className="card-text">Questions <button className="btn btn-primary float-right" type="button" onClick={this.renderQuestions}><FontAwesomeIcon icon={faPlus} /></button></h5>
-                                <hr />
-                                {this.state.questions}
+                               
+                                {renderFields(
+                                    {
+                                        name:'questions',
+                                        component:Question
+                                    }
+                                )}
+
+                                <button className="btn btn-primary float-right" type="submit">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -45,8 +40,19 @@ class QuizForm extends Component {
         );
     }
 }
+const validate = (values)=>{
+    const errors = {};
+    console.log(values);
+    errors['questions'] = [];
+    if(!values['title'])
+        errors['title'] = 'Title is required';
+    if(!values['questions'] || !values['questions'].length)
+        errors['questions'] = {_error:'At least one question must be entered'}
+    return errors;
 
+};
 export default reduxForm({
-    form: 'QuizForm',
-    destroyOnUnmount: false
+    form: 'quizForm',
+    destroyOnUnmount: false,
+    validate
 })(QuizForm);
