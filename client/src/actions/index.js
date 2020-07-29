@@ -47,7 +47,7 @@ export const createUser = (values,history) => async dispatch =>{
 export const createQuiz = (values,history)=> async dispatch =>{
     try {
         const res = await axios.post('/api/quiz', values);
-        dispatch({ type: types.CREATE_QUIZ, payload: [...res.data] });
+        dispatch({ type: types.CREATE_QUIZ, payload: [res.data] });
         history.push('/');
 
     } catch (e) {

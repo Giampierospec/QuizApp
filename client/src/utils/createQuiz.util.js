@@ -3,12 +3,45 @@ import React from 'react';
 import QuizField from '../components/Quiz/QuizField';
 import CheckBoxField from '../components/Quiz/CheckBoxField';
 
+export const validate = (values) => {
+    const errors = {};
+    if (!values['title'])
+        errors['title'] = 'Title is required';
+    if (!values['questions'] || !values['questions'].length)
+        errors['questions'] = { _error: 'At least one question must be entered' }
+    else {
+        const questionErrors = [];
+        values['questions'].forEach((question, index) => {
+            const questionError = {};
+            if (!question.question)
+                questionError['question'] = 'Question is required';
 
+            if (!question.points)
+                questionError['points'] = 'Points are required';
 
-export const questions = () => {
-    return [{ options: [] }];
+            if (!question['options'] || question['options'].length < 2)
+                questionError['options'] = { _error: 'Must have at least 2 answers' };
+            else {
+                const answerErrors = [];
+                question['options'].forEach((option, index) => {
+                    const answerError = {};
+                    if (!option.description)
+                        answerError['description'] = 'Must provide a description';
+
+                    answerErrors[index] = answerError;
+                });
+                questionError['options'] = answerErrors;
+
+            }
+
+            questionErrors[index] = questionError;
+
+        });
+        errors['questions'] = questionErrors;
+    }
+    return errors;
+
 };
-
 export const renderField = (options) => {
     return (<Field
         {...options}

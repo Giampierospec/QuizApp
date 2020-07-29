@@ -8,7 +8,7 @@ class Answer extends Component{
       
         return (<div>
             <h6>Answers <button className="btn btn-primary float-right" type="button" onClick={()=> fields.push({})}><FontAwesomeIcon icon={faPlus} /></button></h6>
-            <span className="text-danger">{submitFailed && error}</span>
+            <span className="text-danger">{error}</span>
             <br />
             <hr />
             {fields.map((option,index)=>{
