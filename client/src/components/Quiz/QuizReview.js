@@ -4,10 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {createQuiz} from '../../actions';
 import { faFileSignature , faTimes, faQuestionCircle, faBraille, faSms, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
+import Loading from '../Loading';
 
 class QuizReview extends Component {
-    sendForm = ()=>{
-        this.props.createQuiz(this.props.quizForm,this.props.history);
+    state={loading:false}
+    sendForm = async ()=>{
+        this.setState({loading:true});
+        await this.props.createQuiz(this.props.quizForm,this.props.history);
+        this.setState({ loading: false });
     }
     renderQuestions = ()=>{
         return this.props.quizForm.questions.map((question,index) =>{
@@ -27,7 +31,7 @@ class QuizReview extends Component {
             )
         });
     }
-    render() {
+    renderContent = ()=>{
         return (<div className="row margin-from-top">
             <div className="col-sm-8 offset-sm-2">
                 <div className="card">
@@ -35,19 +39,25 @@ class QuizReview extends Component {
                         <h4 className="card-title">Review your Inputs</h4>
                     </div>
                     <div className="card-body">
-                        <h4><FontAwesomeIcon icon={faFileSignature}/>Quiz Title: {this.props.quizForm.title}</h4>
-                        <hr/>
-                        <h5><FontAwesomeIcon icon={faQuestionCircle}/> Questions and Answers</h5>
-                        <hr/>
+                        <h4><FontAwesomeIcon icon={faFileSignature} />Quiz Title: {this.props.quizForm.title}</h4>
+                        <hr />
+                        <h5><FontAwesomeIcon icon={faQuestionCircle} /> Questions and Answers</h5>
+                        <hr />
                         {this.renderQuestions()}
                     </div>
                     <div className="card-footer">
-                        <button className="btn btn-info float-left" onClick={this.props.onCancel}><FontAwesomeIcon icon={faTimes}/> Cancel</button>
-                        <button className="btn btn-primary float-right" onClick={this.sendForm}><FontAwesomeIcon icon={faCheck}/> Submit</button>
+                        <button className="btn btn-info float-left" onClick={this.props.onCancel}><FontAwesomeIcon icon={faTimes} /> Cancel</button>
+                        <button className="btn btn-primary float-right" onClick={this.sendForm}><FontAwesomeIcon icon={faCheck} /> Submit</button>
                     </div>
                 </div>
             </div>
         </div>);
+    }
+    render() {
+        if(this.state.loading)
+            return <Loading msg="Submitting form please wait..."/>
+        else
+            return this.renderContent();
     }
 }
 
