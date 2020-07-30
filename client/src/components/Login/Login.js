@@ -15,8 +15,10 @@ class Login extends Component {
             this.props.history.push('/');
 
     }
-    submitLogin = (values) => {
-       this.props.loginUser(values,this.props.history);
+    submitLogin = async (values) => {
+        this.setState({loading:true});
+        await this.props.loginUser(values,this.props.history);
+        this.setState({loading:false});
     }
     renderContent = ()=>{
         return (<div className="margin-from-top">
