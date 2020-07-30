@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons';
 import LoginField from './LoginField';
 
 class LoginForm extends Component {
     renderFields() {
-        return [
+        let fields = [];
+        if (this.props.register)
+            fields.push(<Field
+                key="0"
+                name="name"
+                label="Name"
+                icon={faUser}
+                component={LoginField}
+                type="text"
+            />);
+        
+        return fields.concat([
             <Field
                 key="0"
                 name="email"
@@ -23,7 +34,7 @@ class LoginForm extends Component {
                 component={LoginField}
             />
 
-        ]
+        ]);
     }
     render() {
         return (

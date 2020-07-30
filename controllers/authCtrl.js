@@ -49,7 +49,7 @@ const loginUser = async (req,res,next)=>{
 };
 const logout = (req,res,next)=>{
     req.session = null;
-    return res.send(req.user);
+    return res.send(null);
 };
 /**
  * Create user

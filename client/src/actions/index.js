@@ -32,6 +32,14 @@ export const loginUser = (values, history) => async dispatch =>{
         renderError(e);
     } 
 };
+export const logoutUser = ()=> async dispatch =>{
+    try {
+        const res = await axios.get('/api/logout');
+        dispatch({ type: types.FETCH_USER, payload: res.data });
+    } catch (e) {
+        renderError(e);
+    }
+}
 
 export const createUser = (values,history) => async dispatch =>{
     try {
@@ -43,7 +51,14 @@ export const createUser = (values,history) => async dispatch =>{
        renderError(e) ;
     }   
 };
-
+export const getQuizzes = ()=> async dispatch =>{
+    try {
+        const res = await axios.get('/api/quiz');
+        dispatch({type:types.GET_QUIZZES, payload:res.data});
+        } catch (e) {
+        renderError(e);
+    }
+};
 export const createQuiz = (values,history)=> async dispatch =>{
     try {
         const res = await axios.post('/api/quiz', values);

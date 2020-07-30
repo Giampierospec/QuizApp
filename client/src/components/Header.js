@@ -1,24 +1,33 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-class Header extends Component{
-    renderIfLogged = ()=>{
-        if(this.props.auth){
-            if(this.props.auth.role === 'admin')
-                return [
-                    <Link to="/createQuiz" key="0">create Quiz</Link>
-                ];
-            return [
-                <Link to="/quiz" className="nav-item nav-link" key="1">Quiz</Link>
-            ];
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle, faUser } from '@fortawesome/free-solid-svg-icons';
+import { logoutUser } from '../actions';
+import _ from 'lodash';
+class Header extends Component {
+    logout = () => {
+        this.props.logoutUser();
+    }
+    renderIfLogged = () => {
+        if (!_.isEmpty(this.props.auth)) {
+            const authArray = [];
+            if (this.props.auth.role === 'admin')
+                authArray.push(<Link to="/quiz" key="0" className="nav-item nav-link"><FontAwesomeIcon icon={faQuestionCircle} /> Quiz</Link>);
+
+            return authArray.concat([
+                <button key={1} className="btn btn-primary" onClick={this.logout}>Logout</button>,
+            <span className="navbar-text float-right"><FontAwesomeIcon icon={faUser}/> {this.props.auth.name}</span>
+            ]);
+
         }
         else
             return [
-                <Link to="/login" className="nav-item nav-link" key="2">Login</Link>
+                <Link to="/login" className="nav-item nav-link" key="3">Login</Link>
             ];
     }
-    render(){
-        return(<div>
+    render() {
+        return (<div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <Link className="navbar-brand" to="/">QuizApp</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +42,6 @@ class Header extends Component{
         </div>);
     }
 }
-const mapStateToProps = ({auth})=> ({auth});
+const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { logoutUser })(Header);

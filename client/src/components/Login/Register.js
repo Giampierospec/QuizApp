@@ -17,7 +17,7 @@ class Register  extends Component{
                             <h4 className="card-title"> Register</h4>
                         </div>
                         <div className="card-body">
-                            <LoginForm submitForm={this.submitRegister} btn="register"/>
+                            <LoginForm submitForm={this.submitRegister} btn="register" register={true}/>
                         </div>
                     </div>
                 </div>
