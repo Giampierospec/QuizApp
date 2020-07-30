@@ -55,7 +55,7 @@ const createQuizzes = async (req,res,next)=>{
 };
 const getQuizzesToFill = async (req,res,next)=>{
     try {
-        res.send(await Quiz.find());
+        res.send(await Quiz.find({}));
     } catch (e) {
         res.status(400).send(e);
     }
