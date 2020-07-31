@@ -17,7 +17,7 @@ class Header extends Component {
 
             return authArray.concat([
                 <button key={1} className="btn btn-primary" onClick={this.logout}>Logout</button>,
-            <span className="navbar-text float-right"><FontAwesomeIcon icon={faUser}/> {this.props.auth.name}</span>
+            <span key={2}className="navbar-text float-right"><FontAwesomeIcon icon={faUser}/> {this.props.auth.name}</span>
             ]);
 
         }

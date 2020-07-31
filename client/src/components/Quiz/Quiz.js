@@ -18,8 +18,10 @@ class Quiz extends Component {
                             <h4 className="card-title">{q.title}</h4>
                         </div>
                         <div className="card-body">
-                            <p className="card-text">No. of Questions: {q.questions?.length}</p>
-                            <p className="card-text">Points: {q.totalPoints}</p>
+                            <ul className="list-group-flush">
+                                <li className="list-group-item"><b>No. of Questions: </b> <span className="badge badge-secondary">{q.questions?.length}</span></li>
+                                <li className="list-group-item"><b>Points: </b> <span className="badge badge-secondary">{q.totalPoints}</span> </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -32,9 +34,9 @@ class Quiz extends Component {
         else if (!this.props.quiz.length)
             return (
                 <div className="set-middle">
-                <h3>Nothing to show :(</h3>
-                <Link to="/create"> Create a new quiz here!</Link>
-            </div>);
+                    <h3>Nothing to show :(</h3>
+                    <Link to="/create"> Create a new quiz here!</Link>
+                </div>);
         else
             return (
                 <div className="margin-from-top">
