@@ -69,3 +69,12 @@ export const createQuiz = (values,history)=> async dispatch =>{
         renderError(e);
     } 
 };
+export const getQuiz = (id)=> async dispatch =>{
+    try {
+        const res = await axios.get(`/api/quiz/${id}`);
+        dispatch({ type: types.GET_QUIZ, payload: [res.data] });
+
+    } catch (e) {
+        renderError(e);
+    } 
+};

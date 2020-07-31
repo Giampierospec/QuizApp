@@ -8,6 +8,7 @@ import {TransitionGroup, CSSTransition } from 'react-transition-group';
 import AdminRoute from './AdminRoute';
 import Create from './Quiz/Create';
 import Quiz from './Quiz/Quiz';
+import Detail from './Quiz/Detail';
 const Paths = withRouter(({location})=>{
     return(
         <TransitionGroup>
@@ -23,8 +24,11 @@ const Paths = withRouter(({location})=>{
                     <AdminRoute path="/create">
                         <Create/>
                     </AdminRoute>   
-                    <AdminRoute path="/quiz">
+                    <AdminRoute path="/quiz" exact>
                         <Quiz/>
+                    </AdminRoute>
+                    <AdminRoute path="/quiz/:id">
+                        <Detail/>
                     </AdminRoute>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
