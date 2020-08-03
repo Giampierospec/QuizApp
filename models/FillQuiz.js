@@ -1,10 +1,12 @@
 const {Schema, model,Types} = require('mongoose');
-const questionFillSchema = require('./QuestionsFill');
+const QuestionFillSchema = require('./QuestionFill');
 const fillQuizSchema = new Schema({
     title:{type:String},
-    questions:[questionFillSchema],
+    questions:[QuestionFillSchema],
     _userId:Types.ObjectId,
-    totalPoints:{type:Number, default:0}
+    totalPoints:{type:Number, default:0},
+    filled:{type:Boolean,default:true},
+    maxPoints:{type:Number}
 });
 
 fillQuizSchema.pre('save',function(next){

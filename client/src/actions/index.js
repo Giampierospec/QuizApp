@@ -78,3 +78,21 @@ export const getQuiz = (id)=> async dispatch =>{
         renderError(e);
     } 
 };
+
+export const getQuizzesToFill = ()=> async dispatch =>{
+    try {
+        const res = await axios.get('/api/quizToFill');
+        dispatch({type:types.QUIZ_TO_FILL,payload:res.data});
+    } catch (e) {
+        renderError(e);
+    }
+};
+export const getQuizToFill = (id)=> async dispatch =>{
+    try {
+        const res = await axios.get(`/api/quizToFill/${id}`);
+        dispatch({ type: types.GET_QUIZ, payload: [res.data] });
+
+    } catch (e) {
+        renderError(e);
+    }
+}

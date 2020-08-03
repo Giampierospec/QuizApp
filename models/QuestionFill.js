@@ -1,7 +1,7 @@
-const {Schema} = require('mongoose');
+const {Schema, Types} = require('mongoose');
 
 const questionFillSchema = new Schema({
-    question: { type: String },
+    question:{type:String},
     answer: {
         description: String,
         correct: Boolean

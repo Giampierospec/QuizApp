@@ -55,7 +55,8 @@ const createQuizzes = async (req,res,next)=>{
 };
 const getQuizzesToFill = async (req,res,next)=>{
     try {
-        res.send(await Quiz.find({}));
+        let quizzesToFill = await Quiz.find({});
+        res.send(quizzesToFill.map((q) => ({quizTitle:q.title,quizId:q._id})));
     } catch (e) {
         res.status(400).send(e);
     }
@@ -90,11 +91,16 @@ const fillQuiz = async (req,res,next)=>{
 
 
 };
-
+/**
+ * Gets the specific quiz to fill
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const getQuizToFill = async (req,res,next)=>{
-    const {id} = req.params.id;
-    try {
-        return (await Quiz.findById(id));
+    const {id} = req.params;
+    try {;
+        res.send(await Quiz.findById(id));
     } catch (error) {
         res.status(400).send(error);
     }

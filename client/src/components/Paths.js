@@ -9,6 +9,7 @@ import AdminRoute from './AdminRoute';
 import Create from './Quiz/Create';
 import Quiz from './Quiz/Quiz';
 import Detail from './Quiz/Detail';
+import QuizFill from './QuizFill/QuizFill';
 const Paths = withRouter(({location})=>{
     return(
         <TransitionGroup>
@@ -20,6 +21,9 @@ const Paths = withRouter(({location})=>{
                 <Switch location={location}>
                     <PrivateRoute path="/" exact>
                         <Landing />
+                    </PrivateRoute>
+                    <PrivateRoute path="/quizFill" exact>
+                        <QuizFill/>
                     </PrivateRoute>
                     <AdminRoute path="/create">
                         <Create/>
