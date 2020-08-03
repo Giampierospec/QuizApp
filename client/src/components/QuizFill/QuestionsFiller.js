@@ -39,7 +39,7 @@ class QuestionsFiller extends Component{
                     })}
                         {this.renderFields({
                             name:`questions[${i}].answer.correct`,
-                            value:`${opt.correct}`,
+                            value:opt.correct,
                             label:opt.description
                         })}
                 </div>))}
