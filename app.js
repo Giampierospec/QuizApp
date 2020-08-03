@@ -13,7 +13,7 @@ app.use(cookieSession({
 }));
 
 app.use('/api',usersRoutes,quizzesRoutes);
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 if(process.env.NODE_ENV === 'production'){
     // Express will serve Production Assets
