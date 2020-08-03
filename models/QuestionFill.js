@@ -2,10 +2,7 @@ const {Schema, Types} = require('mongoose');
 
 const questionFillSchema = new Schema({
     question:{type:String},
-    answer: {
-        description: String,
-        correct: Boolean
-    },
+    answer: {type:Types.ObjectId},
     points: { type: Number }
 });
 module.exports = questionFillSchema;

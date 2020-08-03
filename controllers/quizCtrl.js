@@ -99,8 +99,18 @@ const fillQuiz = async (req,res,next)=>{
  */
 const getQuizToFill = async (req,res,next)=>{
     const {id} = req.params;
-    try {;
-        res.send(await Quiz.findById(id));
+    try {
+        const quiz = await Quiz.findById(id);
+        res.send({
+            title:quiz.title,
+            maxPoints:quiz.totalPoints,
+            totalPoints:0,
+            questions: quiz.questions.map((question)=>({
+                question:question.question,
+                points:question.points,
+                answer:{...question.options.map(opt=> ({correct:opt.correct, description:opt.description, chosen:false}))}
+            }))
+        });
     } catch (error) {
         res.status(400).send(error);
     }
