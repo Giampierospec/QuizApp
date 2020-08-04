@@ -2,7 +2,6 @@ const FillQuiz = require('../models/FillQuiz');
 const Quiz = require('../models/Quiz');
 const {body, validationResult} = require('express-validator');
 const _ = require('lodash');
-const { default: QuizFill } = require('../client/src/components/QuizFill/QuizFill');
 /**
  * Gets the quizzes the user has filled
  * @param {*} req 
@@ -69,7 +68,7 @@ const getQuizzesToFill = async (req,res,next)=>{
     try {
         let quizzesToFill = await Quiz.find({});
         quizzesToFill = quizzesToFill.map((q) => ({ quizTitle: q.title, quizId: q._id }))
-        res.send(filterQuizzesToFill(quizzesToFill, req.user._id));
+        res.send(await filterQuizzesToFill(quizzesToFill, req.user._id));
     } catch (e) {
         res.status(400).send(e);
     }
