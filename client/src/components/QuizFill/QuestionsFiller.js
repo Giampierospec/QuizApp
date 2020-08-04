@@ -49,14 +49,6 @@ class QuestionsFiller extends Component {
                 <h4>Question # {i + 1}: {question.question} <b>Value:{question.points}</b></h4>
                 <hr />
                 {this.renderAnswers(question.answer,i)}
-                {/* {question.answer.map((answer, j) => {
-                    return this.renderFields({
-                        name: `questions[${i}].answer.correct`,
-                        label: answer.description,
-                        key:`${i},${j}`,
-                        value:"Hello"
-                    });
-                })} */}
 
             </div>)
         })

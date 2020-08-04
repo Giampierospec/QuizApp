@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 import SelectQuiz from './SelectQuiz';
-import {connect} from 'react-redux';
-import {getQuizToFill} from '../../actions';
-import {reduxForm, FieldArray} from 'redux-form';
+import { connect } from 'react-redux';
+import { getQuizToFill } from '../../actions';
+import { reduxForm } from 'redux-form';
 import QuestionsFiller from './QuestionsFiller';
 import Loading from '../Loading';
-import { renderInput } from '../../utils/fillQuiz.util';
+import { createFillQuiz } from '../../actions';
+import { withRouter } from 'react-router-dom';
 
-class QuizFill extends Component{
-    state = {loading:false, selectedQuiz:false}
-    setSelectedQuiz = async (e)=>{
-        this.setState({selectedQuiz:true, loading:true});
+class QuizFill extends Component {
+    state = { loading: false, selectedQuiz: false }
+    setSelectedQuiz = async (e) => {
+        this.setState({ selectedQuiz: true, loading: true });
         await this.props.getQuizToFill(e.currentTarget.value);
-        this.setState({loading:false});
+        this.setState({ loading: false });
     }
-    showSelectQuiz = ()=>{
-        if(!this.state.selectedQuiz)
-            return <SelectQuiz onSelect={this.setSelectedQuiz}/>
-        else 
+    showSelectQuiz = () => {
+        if (!this.state.selectedQuiz)
+            return <SelectQuiz onSelect={this.setSelectedQuiz} />
+        else
             return null;
     }
-    submitForm =(values)=>{
-        console.log(values);
+    submitForm = async (values) => {
+        this.setState({ loading: true });
+        await this.props.createFillQuiz(values, this.props.history);
+        this.setState({ loading: false });
     }
-    showForm = ()=>{
+    showForm = () => {
         return (<form onSubmit={this.props.handleSubmit(this.submitForm)}>
             <div className="row">
                 <div className="col-sm-8 offset-sm-2">
@@ -32,7 +35,7 @@ class QuizFill extends Component{
                             <h4 className="card-title">{this.props.quiz?.title} <b>Points: </b>{this.props.quiz?.maxPoints}</h4>
                         </div>
                         <div className="card-body">
-                          <QuestionsFiller/>
+                            <QuestionsFiller />
                             <button className="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </div>
@@ -40,25 +43,25 @@ class QuizFill extends Component{
             </div>
         </form>);
     }
-    render(){
-       if(this.state.loading)
-        return <Loading msg="Loading the quiz, please wait"/>
-       else{
-           return (<div className="margin-from-top">
-               {this.showSelectQuiz()}
-               {this.props.quiz && this.showForm()}
-           </div>);
-       }
+    render() {
+        if (this.state.loading)
+            return <Loading msg="Loading the quiz, please wait" />
+        else {
+            return (<div className="margin-from-top">
+                {this.showSelectQuiz()}
+                {this.props.quiz && this.showForm()}
+            </div>);
+        }
     }
 }
-const validate = (values)=>{
-   
+const validate = (values) => {
+    console.log(values);
 }
 
 const QuizFillForm = reduxForm({
-    form:"quizFill",
+    form: "quizFill",
     validate,
-})(QuizFill);
+})(withRouter(QuizFill));
 
-const mapStateToProps = ({quiz})=>({quiz:quiz[0],initialValues:quiz[0]});
-export default connect(mapStateToProps,{getQuizToFill})(QuizFillForm);
+const mapStateToProps = ({ quiz }) => ({ quiz: quiz[0], initialValues: quiz[0] });
+export default connect(mapStateToProps, { getQuizToFill, createFillQuiz })(QuizFillForm);

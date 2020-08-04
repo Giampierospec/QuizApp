@@ -63,7 +63,7 @@ export const createQuiz = (values,history)=> async dispatch =>{
     try {
         const res = await axios.post('/api/quiz', values);
         dispatch({ type: types.CREATE_QUIZ, payload: [res.data] });
-        history.push('/');
+        history.push('/quiz');
 
     } catch (e) {
         renderError(e);
@@ -92,6 +92,15 @@ export const getQuizToFill = (id)=> async dispatch =>{
         const res = await axios.get(`/api/quizToFill/${id}`);
         dispatch({ type: types.GET_QUIZ, payload: [res.data] });
 
+    } catch (e) {
+        renderError(e);
+    }
+}
+export const createFillQuiz = (values, history)=> async dispatch =>{
+    try {
+        const res = await axios.post('/api/quizToFill',values);
+        dispatch({ type: types.CREATE_FILL_QUIZ, payload: [res.data]});
+        history.push('/');
     } catch (e) {
         renderError(e);
     }

@@ -11,9 +11,10 @@ const fillQuizSchema = new Schema({
 
 fillQuizSchema.pre('save',function(next){
     const quizFill = this;
-    quizFill.totalPoints = quizFill.questions.filter(question=> question.answer.correct)
-    .map(question => question.points)
-    .reduce((a,b)=> a + b);
+    quizFill.totalPoints = quizFill.questions
+            .map((question)=>{
+                return question.answer.correct?question.points:0;
+            }).reduce((a,b)=> a + b);
     next();
 });
 module.exports = model('FillQuiz',fillQuizSchema);
