@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import _ from 'lodash';
 import LoginForm from './LoginForm';
 import {loginUser, fetchUser} from '../../actions';
@@ -12,7 +12,7 @@ class Login extends Component {
          await this.props.fetchUser();
          this.setState({loading:false});
         if(!_.isEmpty(this.props.auth))
-            this.props.history.push('/');
+            this.props.history.replace(this.props.location.state.from);
 
     }
     submitLogin = async (values) => {
@@ -49,5 +49,5 @@ class Login extends Component {
     }
 }
 const mapStateToProps = ({auth})=>({auth});
-export default connect(mapStateToProps,{loginUser, fetchUser})(withRouter(Login));
+export default connect(mapStateToProps,{loginUser, fetchUser})(Login);
 

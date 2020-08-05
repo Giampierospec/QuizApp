@@ -90,17 +90,27 @@ export const getQuizzesToFill = ()=> async dispatch =>{
 export const getQuizToFill = (id)=> async dispatch =>{
     try {
         const res = await axios.get(`/api/quizToFill/${id}`);
-        dispatch({ type: types.GET_QUIZ, payload: [res.data] });
+        dispatch({ type: types.GET_QUIZ_TO_FILL, payload: res.data });
 
     } catch (e) {
         renderError(e);
     }
 }
+export const clearQuizToFill = ()=> ({type:types.GET_QUIZ_TO_FILL, payload:{}});
+
 export const createFillQuiz = (values, history)=> async dispatch =>{
     try {
         const res = await axios.post('/api/quizToFill',values);
         dispatch({ type: types.CREATE_FILL_QUIZ, payload: [res.data]});
-        history.push('/');
+        history.push('/filled');
+    } catch (e) {
+        renderError(e);
+    }
+}
+export const getFilledQuizzes = ()=> async dispatch =>{
+    try {
+        const res = await axios.get('/api/quizFull');
+        dispatch({type:types.GET_QUIZ_FILLED,payload:res.data});
     } catch (e) {
         renderError(e);
     }

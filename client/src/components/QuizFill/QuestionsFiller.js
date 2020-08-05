@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import QuizFillField from './QuizFillFields';
 import { Field } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class QuestionsFiller extends Component {
     blockFields = (e,index)=>{
@@ -42,7 +43,7 @@ class QuestionsFiller extends Component {
 
     renderQuestions() {
         const { quiz } = this.props;
-        if (!quiz)
+        if (_.isEmpty(quiz))
             return null;
         return quiz.questions.map((question, i) => {
             return (<div key={i}>
@@ -59,6 +60,6 @@ class QuestionsFiller extends Component {
             return this.renderQuestions();
     }
 }
-const mapStateToProps = ({quiz})=>({quiz:quiz[0]});
+const mapStateToProps = ({quizToFill})=>({quiz:quizToFill});
 
 export default connect(mapStateToProps)(QuestionsFiller);

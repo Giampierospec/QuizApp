@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import SelectQuiz from './SelectQuiz';
 import { connect } from 'react-redux';
-import { getQuizToFill } from '../../actions';
 import { reduxForm } from 'redux-form';
 import QuestionsFiller from './QuestionsFiller';
 import Loading from '../Loading';
-import { createFillQuiz } from '../../actions';
+import { createFillQuiz, clearQuizToFill, getQuizToFill} from '../../actions';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 
 class QuizFill extends Component {
     state = { loading: false, selectedQuiz: false }
@@ -14,6 +14,9 @@ class QuizFill extends Component {
         this.setState({ selectedQuiz: true, loading: true });
         await this.props.getQuizToFill(e.currentTarget.value);
         this.setState({ loading: false });
+    }
+    componentWillUnmount(){
+        this.props.clearQuizToFill();
     }
     showSelectQuiz = () => {
         if (!this.state.selectedQuiz)
@@ -36,7 +39,9 @@ class QuizFill extends Component {
                         </div>
                         <div className="card-body">
                             <QuestionsFiller />
-                            <button className="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                        <div className="card-footer">
+                            <button className="btn btn-primary float-left" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -49,13 +54,14 @@ class QuizFill extends Component {
         else {
             return (<div className="margin-from-top">
                 {this.showSelectQuiz()}
-                {this.props.quiz && this.showForm()}
+                {!_.isEmpty(this.props.quiz) && this.showForm()}
             </div>);
         }
     }
 }
 const validate = (values) => {
-    console.log(values);
+    const errors = {};
+    return errors;
 }
 
 const QuizFillForm = reduxForm({
@@ -63,5 +69,5 @@ const QuizFillForm = reduxForm({
     validate,
 })(withRouter(QuizFill));
 
-const mapStateToProps = ({ quiz }) => ({ quiz: quiz[0], initialValues: quiz[0] });
-export default connect(mapStateToProps, { getQuizToFill, createFillQuiz })(QuizFillForm);
+const mapStateToProps = ({ quizToFill }) => ({ quiz: quizToFill, initialValues: quizToFill });
+export default connect(mapStateToProps, { getQuizToFill, createFillQuiz, clearQuizToFill })(QuizFillForm);

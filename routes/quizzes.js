@@ -1,7 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const {isAuthenticated, isAdmin}  = require('../controllers/authCtrl');
-const {getQuizzes,createQuizzes,validate, getFilledQuizzes, getQuizzesToFill, getQuiz, getQuizToFill, fillQuiz} = require('../controllers/quizCtrl');
+const {getQuizzes,
+       createQuizzes,
+       validate, 
+       getFilledQuizzes, 
+       getQuizzesToFill, 
+       getQuiz, 
+       getQuizToFill, 
+       fillQuiz} = require('../controllers/quizCtrl');
+
 router.route('/quizFull')
        .get(isAuthenticated,getFilledQuizzes)
 

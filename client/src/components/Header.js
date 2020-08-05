@@ -18,7 +18,8 @@ class Header extends Component {
             return authArray.concat([
                 <button key={1} className="btn btn-primary" onClick={this.logout}>Logout</button>,
                 <Link key={2} className="nav-item nav-link" to="/quizFill"> Fill Quiz</Link>,
-            <span key={3}className="navbar-text float-right"><FontAwesomeIcon icon={faUser}/> {this.props.auth.name}</span>
+                <Link key={3} className="nav-item nav-link" to="/filled"> Filled Quizzes</Link>,
+            <span key={4}className="navbar-text float-right"><FontAwesomeIcon icon={faUser}/> {this.props.auth.name}</span>
             ]);
 
         }

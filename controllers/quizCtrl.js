@@ -10,7 +10,7 @@ const _ = require('lodash');
  */
 const getFilledQuizzes = async (req,res,next)=>{
     try{
-        const fillQuiz = await FillQuiz.find({ _userId: req.user._id });
+        const fillQuiz = await FillQuiz.find({ _userId: req.user._id }).select({_id:1,title:1,totalPoints:1, maxPoints:1});
         return res.send(fillQuiz);
     }
     catch(e){

@@ -15,7 +15,10 @@ class PrivateRoute extends Component{
                 path={path}
                 render={() =>
                     !_.isEmpty(auth) ? (children) : (
-                        <Redirect to='/login' />
+                        <Redirect to={{
+                            pathname:'/login',
+                            state:{from:path}
+                        }} />
                     )
                 }
             />
