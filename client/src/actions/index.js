@@ -115,3 +115,11 @@ export const getFilledQuizzes = ()=> async dispatch =>{
         renderError(e);
     }
 }
+export const getFilledQuiz = (id)=> async dispatch =>{
+    try {
+        const res = await axios.get(`/api/quizFull/${id}`);
+        dispatch({ type: types.GET_QUIZ_FILLED_USER, payload: [res.data] });
+    } catch (e) {
+        renderError(e);
+    }
+}

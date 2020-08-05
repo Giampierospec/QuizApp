@@ -148,7 +148,15 @@ const getQuizToFill = async (req,res,next)=>{
         res.status(400).send(error);
     }
 };
-
+const getFilledQuiz = async (req,res,next)=>{
+    try {
+        const {id} = req.params;
+        const filledQuiz = await Quiz.findOne({_userId: req.user._id, _id:id})
+        res.send(filledQuiz);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
 
 
 module.exports = {
@@ -159,5 +167,6 @@ module.exports = {
     getQuizzes,
     getQuiz,
     getQuizToFill,
-    fillQuiz
+    fillQuiz,
+    getFilledQuiz
 };

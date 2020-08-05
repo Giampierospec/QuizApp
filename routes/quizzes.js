@@ -8,10 +8,14 @@ const {getQuizzes,
        getQuizzesToFill, 
        getQuiz, 
        getQuizToFill, 
-       fillQuiz} = require('../controllers/quizCtrl');
+       fillQuiz,
+       getFilledQuiz} = require('../controllers/quizCtrl');
 
 router.route('/quizFull')
        .get(isAuthenticated,getFilledQuizzes)
+
+router.route('/quizFull/:id')
+       .get(isAuthenticated,getFilledQuiz)
 
 router.route('/quizToFill')
        .get(isAuthenticated,getQuizzesToFill)

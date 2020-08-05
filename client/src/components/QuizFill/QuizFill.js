@@ -10,9 +10,7 @@ import _ from 'lodash';
 
 class QuizFill extends Component {
     state = { loading: false, selectedQuiz: false}
-    componentDidMount(){
-        this.setState({selectedQuiz:false});
-    }
+    
     setSelectedQuiz = async (e) => {
         this.setState({ selectedQuiz: true, loading: true});
         await this.props.getQuizToFill(e.currentTarget.value);

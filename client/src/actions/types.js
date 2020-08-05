@@ -6,3 +6,4 @@ export const QUIZ_TO_FILL = "quiz_to_fill";
 export const CREATE_FILL_QUIZ = "create_fill_quiz";
 export const GET_QUIZ_FILLED = "get_quiz_filled";
 export const GET_QUIZ_TO_FILL = "get_quiz_to_fill";
+export const GET_QUIZ_FILLED_USER = "get_quiz_filled_user";
