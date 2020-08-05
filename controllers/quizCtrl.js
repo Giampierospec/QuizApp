@@ -93,6 +93,8 @@ const getAnswer = (obj)=>{
     for([key,value] of Object.entries(obj))
         if(value.chosen)
             answer = value;
+    if(_.isEmpty(answer))
+        throw new Error("Answer is empty");
     
     return _.pick(answer,['description','correct']);
             
@@ -117,8 +119,7 @@ const fillQuiz = async (req,res,next)=>{
       res.send(doc);
   }
   catch(e){
-      console.log(e);
-      res.status(400).send(e);
+      res.status(400).send(e.message);
   }
 
 
