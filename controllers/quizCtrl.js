@@ -89,14 +89,19 @@ const getQuiz = async (req,res,next)=>{
     }
 };
 const getAnswer = (obj)=>{
-    let answer = {}
-    for([key,value] of Object.entries(obj))
+    let answer = {};
+    let description = "";
+    for([key,value] of Object.entries(obj)){
+        if(value.correct)
+            description = value.description;
         if(value.chosen)
-            answer = value;
+            answer = {...value,correctAnswer:description};
+    }
+
     if(_.isEmpty(answer))
         throw new Error("Answer is empty");
     
-    return _.pick(answer,['description','correct']);
+    return _.pick(answer,['description','correct','correctAnswer']);
             
 }
 const fillQuiz = async (req,res,next)=>{
@@ -151,7 +156,7 @@ const getQuizToFill = async (req,res,next)=>{
 const getFilledQuiz = async (req,res,next)=>{
     try {
         const {id} = req.params;
-        const filledQuiz = await Quiz.findOne({_userId: req.user._id, _id:id})
+        const filledQuiz = await FillQuiz.findOne({_userId: req.user._id, _id:id})
         res.send(filledQuiz);
     } catch (error) {
         res.status(400).send(error);

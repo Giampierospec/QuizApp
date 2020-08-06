@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFilledQuizzes } from '../../actions';
 import Loading from '../Loading';
+import { Link } from 'react-router-dom';
 class GetFilledQuizzes extends Component {
     state = { loading: true }
     async componentDidMount() {
@@ -19,6 +20,9 @@ class GetFilledQuizzes extends Component {
                             </div>
                             <div className="card-body">
                                 <h5 className="card-text"><em>You got: {quiz.totalPoints}/{quiz.maxPoints} in this Quiz</em></h5>
+                            </div>
+                            <div className="card-footer">
+                                <Link className="btn btn-primary float-right" to={`/filled/${quiz._id}`}>Detail</Link>
                             </div>
                         </div>
                     </div>

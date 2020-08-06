@@ -9,7 +9,7 @@ const renderError = (e)=>{
     Swal.fire({
         title: "An error has ocurred",
         icon: "error",
-        html: err
+        text: err
     });
 };
 

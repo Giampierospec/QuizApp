@@ -11,6 +11,7 @@ import Quiz from './Quiz/Quiz';
 import Detail from './Quiz/Detail';
 import QuizFill from './QuizFill/QuizFill';
 import GetFilledQuizzes from './QuizFill/GetFilledQuizzes';
+import FilledQuizDetail from './QuizFill/FilledQuizDetail';
 const Paths = withRouter(({location})=>{
     return(
         <TransitionGroup>
@@ -26,8 +27,11 @@ const Paths = withRouter(({location})=>{
                     <PrivateRoute path="/quizFill" exact>
                         <QuizFill/>
                     </PrivateRoute>
-                    <PrivateRoute path="/filled">
+                    <PrivateRoute path="/filled" exact>
                         <GetFilledQuizzes/>
+                    </PrivateRoute>
+                    <PrivateRoute path="/filled/:id">
+                        <FilledQuizDetail/>
                     </PrivateRoute>
                     <AdminRoute path="/create">
                         <Create/>
