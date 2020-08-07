@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import QuestionsFiller from './QuestionsFiller';
 import Loading from '../Loading';
-import { createFillQuiz, getQuizToFill} from '../../actions';
+import { createFillQuiz, getQuizToFill, clearQuizToFill} from '../../actions';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 class QuizFill extends Component {
     state = { loading: false, selectedQuiz: false}
-    
+    componentWillUnmount(){
+        this.props.clearQuizToFill();
+    }
     setSelectedQuiz = async (e) => {
         this.setState({ selectedQuiz: true, loading: true});
         await this.props.getQuizToFill(e.currentTarget.value);
@@ -71,4 +73,4 @@ const QuizFillForm = reduxForm({
 
 const mapStateToProps = ({ quizToFill }) => ({ quiz: quizToFill, initialValues: quizToFill });
 
-export default connect(mapStateToProps, { getQuizToFill, createFillQuiz})(QuizFillForm);
+export default connect(mapStateToProps, { getQuizToFill, createFillQuiz, clearQuizToFill})(QuizFillForm);
