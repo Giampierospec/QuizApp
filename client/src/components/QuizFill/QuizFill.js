@@ -30,7 +30,6 @@ class QuizFill extends Component {
         this.setState({ loading: false });
     }
     showForm = () => {
-        const { error } = this.props;
         return (
         <form onSubmit={this.props.handleSubmit(this.submitForm)}>
             <div className="row">
@@ -40,7 +39,6 @@ class QuizFill extends Component {
                             <h4 className="card-title">{this.props.quiz?.title} <b>Points: </b>{this.props.quiz?.maxPoints}</h4>
                         </div>
                         <div className="card-body">
-                            {error}
                             <QuestionsFiller />
                         </div>
                         <div className="card-footer">
@@ -62,12 +60,9 @@ class QuizFill extends Component {
         }
     }
 }
-const validate = (values)=>{
-    console.log(values);
-}
+
 const QuizFillForm = reduxForm({
     form: "quizFillForm",
-    validate,
     enableReinitialize:true
 })(withRouter(QuizFill));
 

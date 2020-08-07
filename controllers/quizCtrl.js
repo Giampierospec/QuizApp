@@ -112,7 +112,7 @@ const getAnswer = (obj)=>{
     }
 
     if(_.isEmpty(answer))
-        throw new Error("Answer is empty");
+        throw new Error("There are some empty answers");
     
     return _.pick(answer,['description','correct','correctAnswer']);
             
