@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {createQuiz} from '../../actions';
 import { faFileSignature , faTimes, faQuestionCircle, faBraille, faSms, faCheck} from '@fortawesome/free-solid-svg-icons';
-import { withRouter } from 'react-router-dom';
 import Loading from '../Loading';
 
 class QuizReview extends Component {
     state={loading:false}
     sendForm = async ()=>{
         this.setState({loading:true});
-        await this.props.createQuiz(this.props.quizForm,this.props.history);
+        await this.props.onFormSubmit(this.props.quizForm);
         this.setState({ loading: false });
     }
     renderQuestions = ()=>{
@@ -63,4 +61,4 @@ class QuizReview extends Component {
 
 const mapStateToProps = ({ form }) => ({ quizForm: form.quizForm.values });
 
-export default connect(mapStateToProps,{createQuiz})(withRouter(QuizReview));
+export default connect(mapStateToProps)(QuizReview);

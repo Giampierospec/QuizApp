@@ -9,7 +9,8 @@ const {getQuizzes,
        getQuiz, 
        getQuizToFill, 
        fillQuiz,
-       getFilledQuiz} = require('../controllers/quizCtrl');
+       getFilledQuiz,
+       updateQuiz} = require('../controllers/quizCtrl');
 
 router.route('/quizFull')
        .get(isAuthenticated,getFilledQuizzes)
@@ -30,5 +31,6 @@ router.route('/quiz')
 
 router.route('/quiz/:id')
       .get(isAuthenticated,isAdmin,getQuiz)
+       .put(isAuthenticated, isAdmin, validate('createQuizzes'), updateQuiz)
 
 module.exports = router;

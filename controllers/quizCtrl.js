@@ -2,6 +2,7 @@ const FillQuiz = require('../models/FillQuiz');
 const Quiz = require('../models/Quiz');
 const {body, validationResult} = require('express-validator');
 const _ = require('lodash');
+const { findById } = require('../models/FillQuiz');
 /**
  * Gets the quizzes the user has filled
  * @param {*} req 
@@ -52,6 +53,18 @@ const createQuizzes = async (req,res,next)=>{
         
     } catch (e) {
         res.status(400).send(e);
+    }
+};
+const updateQuiz = async (req,res,next)=>{
+    try {
+        const {id} = req.params;
+        const {title,questions} = req.body;
+        const quiz = await Quiz.findById(id);
+        quiz.title = title;
+        quiz.questions = questions;
+        res.send(await quiz.save());
+    } catch (error) {
+        res.status(400).send(error);
     }
 };
 const filterQuizzesToFill = async (arr,userId)=>{
@@ -173,5 +186,6 @@ module.exports = {
     getQuiz,
     getQuizToFill,
     fillQuiz,
-    getFilledQuiz
+    getFilledQuiz,
+    updateQuiz
 };

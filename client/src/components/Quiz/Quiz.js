@@ -24,7 +24,10 @@ class Quiz extends Component {
                             </ul>
                         </div>
                         <div className="card-footer">
-                            <Link to={`/quiz/${q._id}`} className="btn btn-primary">Detail</Link>
+                            <div className="btn-group">
+                                <Link to={`/quiz/${q._id}`} className="btn btn-primary">Detail</Link>
+                                <Link to={`/edit/${q._id}`} className="btn btn-secondary">Edit</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
