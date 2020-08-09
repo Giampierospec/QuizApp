@@ -132,3 +132,9 @@ export const getFilledQuiz = (id)=> async dispatch =>{
         renderError(e);
     }
 }
+export const resetQuiz = ()=>{
+    return {
+        action:types.GET_QUIZ,
+        payload:[]
+    }
+};

@@ -6,11 +6,13 @@ import {Link} from 'react-router-dom';
 import Question from './Question';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {connect} from 'react-redux';
-import {getQuiz} from '../../actions';
+import {getQuiz, resetQuiz} from '../../actions';
 class QuizForm extends Component {
     async componentDidMount(){
         if (this.props.quizId)
             await this.props.getQuiz(this.props.quizId);
+        else
+            this.props.resetQuiz();
     }
     render() {
         const { submitting } = this.props;
@@ -60,6 +62,6 @@ const FormQuiz = reduxForm({
 
 const mapStateToProps = ({quiz})=>({initialValues:quiz[0]});
 
-export default connect(mapStateToProps,{getQuiz})(FormQuiz);
+export default connect(mapStateToProps,{getQuiz, resetQuiz})(FormQuiz);
 
 

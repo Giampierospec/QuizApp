@@ -2,7 +2,6 @@ const FillQuiz = require('../models/FillQuiz');
 const Quiz = require('../models/Quiz');
 const {body, validationResult} = require('express-validator');
 const _ = require('lodash');
-const { findById } = require('../models/FillQuiz');
 /**
  * Gets the quizzes the user has filled
  * @param {*} req 
