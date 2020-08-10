@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFilledQuizzes } from '../../actions';
+import { getFilledQuizzes, deleteFilledQuiz } from '../../actions';
 import Loading from '../Loading';
 import { Link } from 'react-router-dom';
+import  DeleteModal from './ModalDelete';
 class GetFilledQuizzes extends Component {
-    state = { loading: true }
+    state = { loading: true, showDelete:false, quiz:{} }
     async componentDidMount() {
         await this.props.getFilledQuizzes();
         this.setState({ loading: false });
+    }
+    showDeleteModal= (quiz)=>{
+        this.setState({showDelete:true,quiz});
+    }
+    onClose = ()=>{
+        this.setState({showDelete:false});
     }
     renderList() {
         return this.props.quizFill.map((quiz, i) => {
@@ -22,7 +29,8 @@ class GetFilledQuizzes extends Component {
                                 <h5 className="card-text"><em>You got: {quiz.totalPoints}/{quiz.maxPoints} in this Quiz</em></h5>
                             </div>
                             <div className="card-footer">
-                                <Link className="btn btn-primary float-right" to={`/filled/${quiz._id}`}>Detail</Link>
+                                <Link className="btn btn-info float-left" to={`/filled/${quiz._id}`}>Detail</Link>
+                                <button className="btn btn-danger float-right" onClick={()=>{this.showDeleteModal(quiz)}}>Delete</button>
                             </div>
                         </div>
                     </div>
@@ -33,10 +41,13 @@ class GetFilledQuizzes extends Component {
     }
     renderContent() {
         return (
-            <div className="margin-from-top">
-                <h4 className="text-center">Quizzes Filled By {this.props.auth.name}</h4>
-                <hr/>
-                {this.renderList()}
+            <div>
+                <div className="margin-from-top">
+                    <h4 className="text-center">Quizzes Filled By {this.props.auth.name}</h4>
+                    <hr />
+                    {this.renderList()}
+                </div>
+                <DeleteModal show={this.state.showDelete} quiz={this.state.quiz} close={this.onClose}/>
             </div>);
     }
     render() {
@@ -47,4 +58,4 @@ class GetFilledQuizzes extends Component {
     }
 }
 const mapStateToProps = ({ quizFill , auth}) => ({ quizFill, auth });
-export default connect(mapStateToProps, { getFilledQuizzes })(GetFilledQuizzes);
+export default connect(mapStateToProps, { getFilledQuizzes, deleteFilledQuiz })(GetFilledQuizzes);

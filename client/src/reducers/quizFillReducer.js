@@ -1,4 +1,4 @@
-import {QUIZ_TO_FILL, CREATE_FILL_QUIZ, GET_QUIZ_FILLED, GET_QUIZ_FILLED_USER} from '../actions/types';
+import {QUIZ_TO_FILL, CREATE_FILL_QUIZ, GET_QUIZ_FILLED, GET_QUIZ_FILLED_USER, DELETE_FILLED_QUIZ} from '../actions/types';
 
 export default(state = [], action) =>{
     switch (action.type) {
@@ -10,6 +10,8 @@ export default(state = [], action) =>{
             return state.concat(action.payload)
         case GET_QUIZ_FILLED_USER:
             return action.payload;
+        case DELETE_FILLED_QUIZ:
+            return state.filter(fQuiz=> fQuiz._id !== action.payload);
         default:
             return state;
     }

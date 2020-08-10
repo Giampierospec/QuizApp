@@ -132,9 +132,17 @@ export const getFilledQuiz = (id)=> async dispatch =>{
         renderError(e);
     }
 }
+export const deleteFilledQuiz = (id)=> async dispatch =>{
+    try {
+        await axios.delete(`/api/quizFull/${id}`);
+        dispatch({ type: types.DELETE_FILLED_QUIZ, payload: id });
+    } catch (e) {
+        renderError(e);
+    }
+}
 export const resetQuiz = ()=>{
     return {
-        action:types.GET_QUIZ,
+        type:types.GET_QUIZ,
         payload:[]
     }
 };

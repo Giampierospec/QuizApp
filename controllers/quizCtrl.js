@@ -174,7 +174,15 @@ const getFilledQuiz = async (req,res,next)=>{
         res.status(400).send(error);
     }
 }
-
+const deleteFilledQuiz = async (req,res,next)=>{
+    try {
+        const {id} = req.params;
+        const deletedQuiz = await FillQuiz.deleteOne({_id:id});
+        res.status(204).send(deletedQuiz);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+};
 
 module.exports = {
     getFilledQuizzes,
@@ -186,5 +194,6 @@ module.exports = {
     getQuizToFill,
     fillQuiz,
     getFilledQuiz,
-    updateQuiz
+    updateQuiz,
+    deleteFilledQuiz
 };

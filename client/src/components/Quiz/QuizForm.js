@@ -9,8 +9,9 @@ import {connect} from 'react-redux';
 import {getQuiz, resetQuiz} from '../../actions';
 class QuizForm extends Component {
     async componentDidMount(){
-        if (this.props.quizId)
-            await this.props.getQuiz(this.props.quizId);
+        const {quizId} = this.props;
+        if (quizId)
+            await this.props.getQuiz(quizId);
         else
             this.props.resetQuiz();
     }

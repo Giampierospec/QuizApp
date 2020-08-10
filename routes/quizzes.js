@@ -10,13 +10,15 @@ const {getQuizzes,
        getQuizToFill, 
        fillQuiz,
        getFilledQuiz,
-       updateQuiz} = require('../controllers/quizCtrl');
+       updateQuiz,
+       deleteFilledQuiz} = require('../controllers/quizCtrl');
 
 router.route('/quizFull')
        .get(isAuthenticated,getFilledQuizzes)
 
 router.route('/quizFull/:id')
        .get(isAuthenticated,getFilledQuiz)
+       .delete(isAuthenticated,deleteFilledQuiz);
 
 router.route('/quizToFill')
        .get(isAuthenticated,getQuizzesToFill)
