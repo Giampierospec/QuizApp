@@ -13,6 +13,7 @@ import QuizFill from './QuizFill/QuizFill';
 import GetFilledQuizzes from './QuizFill/GetFilledQuizzes';
 import FilledQuizDetail from './QuizFill/FilledQuizDetail';
 import Edit from './Quiz/Edit';
+import Statistics from './Stats/Statistics';
 const Paths = withRouter(({location})=>{
     return(
         <TransitionGroup>
@@ -45,6 +46,9 @@ const Paths = withRouter(({location})=>{
                     </AdminRoute>
                     <AdminRoute path="/quiz/:id">
                         <Detail/>
+                    </AdminRoute>
+                    <AdminRoute path="/stats">
+                        <Statistics/>
                     </AdminRoute>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>

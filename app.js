@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
 const app = express();
-const {usersRoutes,quizzesRoutes} = require('./routes')
+const {usersRoutes,quizzesRoutes, statsRoutes} = require('./routes')
 
 app.use(bodyParser.json());
 app.use(cookieSession({
@@ -12,7 +12,7 @@ app.use(cookieSession({
     keys: [keys.cookieSecret]
 }));
 
-app.use('/api',usersRoutes,quizzesRoutes);
+app.use('/api', usersRoutes, quizzesRoutes, statsRoutes);
 const PORT = process.env.PORT || 5000;
 
 if(process.env.NODE_ENV === 'production'){
