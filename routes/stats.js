@@ -6,7 +6,7 @@ const { isAuthenticated, isAdmin } = require('../controllers/authCtrl');
 
 router.route('/stats')
     .get(isAuthenticated,isAdmin,getQuizStats);
-router.route('/stats/questions')
+router.route('/titleStats')
         .get(getQuestions);
 
 module.exports = router;

@@ -1,6 +1,7 @@
  const QuizFill = require('../models/FillQuiz');
  const User = require('../models/User');
  const {PROPS_TO_FILTER} = require('../utils/stats.utils');
+ const _ = require('lodash');
 
 const mapUser = async (item = {})=>{
     const user = await User.findById(item._id);
@@ -38,23 +39,22 @@ const getQuizStats = async (req,res,next)=>{
         res.status(400).send(e);
     }
 }
-
+const groupBy = (objectArray,property)=>{
+    return objectArray.reduce((acc,obj)=>{
+        let key = obj[property];
+        if(!acc[key])
+            acc[key]=[];
+        
+        acc[key].push(obj);
+        return acc;
+    },{})
+}
 const getQuestions = async (req,res,next)=>{
     try {
-        const quizFill = await QuizFill
-                         .aggregate([
-                             {
-                                 $unwind:"$questions"
-                             },
-                             {
-                                $group:{
-                                    _id:'$questions.question',
-                                    count:{$sum:1}
-                                }
-
-                             },
-                         ]);
-        res.send(quizFill);
+        const {title}  = req.query;
+        const {questions} = await QuizFill.findOne({title});
+        const questionsMapped = groupBy(questions,'question')
+        res.send(questionsMapped);
     } catch (e) {
         res.status(400).send(e);
     }
