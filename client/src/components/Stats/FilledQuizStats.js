@@ -34,7 +34,7 @@ class FilledQuizStats extends Component{
         this.chart = new Chart(ctx,{
             type:'bar',
             data:{
-                labels: ['Quantity'],
+                labels: ['Filled'],
                 datasets:this.renderDataSet()
             }
         });

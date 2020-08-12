@@ -39,17 +39,31 @@ const getQuizStats = async (req,res,next)=>{
     }
 }
 
+const getQuestions = async (req,res,next)=>{
+    try {
+        const quizFill = await QuizFill
+                         .aggregate([
+                             {
+                                 $unwind:"$questions"
+                             },
+                             {
+                                $group:{
+                                    _id:'$questions.question',
+                                    count:{$sum:1}
+                                }
 
-
-
-
-
-
-
+                             },
+                         ]);
+        res.send(quizFill);
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
 
 
 
 
 module.exports = {
-    getQuizStats
+    getQuizStats,
+    getQuestions
 };

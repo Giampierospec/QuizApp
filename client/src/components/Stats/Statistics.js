@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FilledQuizStats from './FilledQuizStats';
+import FilledQuestionStats from './FilledQuestionStats';
 
 
 class Statistics extends Component{
@@ -17,6 +18,16 @@ class Statistics extends Component{
                         </div>
                     </div>
                 </div>
+                    <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-header bg-secondary text-white">
+                                <h4 className="card-title text-center">Question Filled Stats</h4>
+                            </div>
+                            <div className="card-body">
+                                <FilledQuestionStats />
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>);
     }
