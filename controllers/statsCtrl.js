@@ -52,9 +52,11 @@ const groupBy = (objectArray,property)=>{
 const getQuestions = async (req,res,next)=>{
     try {
         const {title}  = req.query;
-        const {questions} = await QuizFill.findOne({title});
-        const questionsMapped = groupBy(questions,'question')
-        res.send(questionsMapped);
+        const quizFill = await QuizFill.find({title});
+        const titlesGrouped = groupBy(quizFill,'title');
+        const questions = titlesGrouped[title].map(item=> item.questions).reduce((a,b)=>a.concat(b));
+        const questionsGrouped = groupBy(questions,'question');
+        res.send(questionsGrouped);
     } catch (e) {
         res.status(400).send(e);
     }
