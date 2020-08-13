@@ -25,7 +25,7 @@ class FilledQuizStats extends Component{
             return {
                 label: chart._id || "Total Filled",
                 data: [chart.count],
-                backgroundColor:generateRandomColor()
+                backgroundColor:[generateRandomColor()]
             };
         });
     }

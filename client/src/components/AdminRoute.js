@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchUser} from '../actions';
-import _ from 'lodash';
 class AdminRoute extends Component{
     async componentDidMount(){
         await this.props.fetchUser();
@@ -15,7 +14,12 @@ class AdminRoute extends Component{
             render={()=>
                 ((auth.role === 'admin'))
                 ?(children):(
-                    <Redirect to="/"/>
+                    <Redirect to={
+                        {
+                            pathname:'/login',
+                            state:{from:path}
+                        }
+                    }/>
                 )
             }
             />

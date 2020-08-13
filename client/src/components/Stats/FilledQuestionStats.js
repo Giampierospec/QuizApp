@@ -1,39 +1,79 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Chart from 'chart.js';
-class FilledQuestionStats extends Component{
-    constructor(props){
+import { getStat, generateRandomColor } from '../../utils/statUtil';
+class FilledQuestionStats extends Component {
+    constructor(props) {
         super(props);
         this.chartRef = React.createRef();
+        this.selectRef = React.createRef();
+        this.chart = "";
+        this.state = {
+            questions: {},
+            titles: [],
+            title: ""
+        };
     }
-    componentDidMount(){
+    async componentDidMount() {
+        const { data } = await getStat('/api/titles');
+        this.setState({
+            titles: data
+        });
         this.renderContext();
     }
-    renderContext = ()=>{
+    renderContext = () => {
         const ctx = this.chartRef.current.getContext('2d');
-        new Chart(ctx,{
-            type:'line',
-            data:{
-                labels: ["10:00", "11:00", "12:00", "13:00"],
-                datasets: [
-                    {
-                        label: "My First dataset",
-
-                        // Insert styling, colors etc here
-
-                        data: [{ x: "10:00", y: 127 },
-                        { x: "11:00", y: 140 },
-                        { x: "12:00", y: 135 },
-                        { x: "13:00", y: 122 },
-                    {x:"14:00",y:500}]
-                    }]
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["filled", "Good Answer", 'Bad answer'],
+                datasets: Object
+                    .keys(this.state.questions)
+                    .map((k) => {
+                        const backgroundColor = generateRandomColor();
+                        return {
+                            label: k,
+                            data: [this.state.questions[k].length, 
+                            this.state.questions[k].filter((question)=>question.answer.correct).length, 
+                                this.state.questions[k].filter((question) => !question.answer.correct).length,],
+                            backgroundColor: [backgroundColor,backgroundColor,backgroundColor]
+                        }
+                    })
             }
-        })
+        });
     }
-    render(){
-        return(
-            <canvas ref={this.chartRef}>
+    onSelect = async () => {
+        this.chart.destroy();
+        const title = this.selectRef.current.value;
+        if (title) {
+            const { data } = await getStat(`/api/titleStats?title=${title}`);
+            this.setState({ questions: data })
+            this.renderContext(); 
+        }
 
-            </canvas>
+            
+
+
+        
+    }
+    setTitles = () => {
+        return (
+            <div className="col-sm-6 offset-sm-3">
+                <select className="form-control" defaultValue="" onChange={this.onSelect} ref={this.selectRef}>
+                    <option value="">Pick a Quiz</option>
+                    {this.state.titles.map(({ title }, i) => <option value={title} key={i}>{title}</option>)}
+                </select>
+            </div>
+        );
+    }
+    render() {
+        return (
+            <div>
+                {this.setTitles()}
+                <h4>{this.state.title}</h4>
+                <canvas ref={this.chartRef}>
+
+                </canvas>
+            </div>
         )
     }
 }

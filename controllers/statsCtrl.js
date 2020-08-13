@@ -59,11 +59,20 @@ const getQuestions = async (req,res,next)=>{
         res.status(400).send(e);
     }
 }
+const getTitles = async (req,res,next)=>{
+    try {
+        const titles = await QuizFill.find({}).select('title');
+        res.send(titles);
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
 
 
 
 
 module.exports = {
     getQuizStats,
-    getQuestions
+    getQuestions, 
+    getTitles
 };
