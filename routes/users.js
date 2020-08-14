@@ -4,7 +4,8 @@ const { createUser,
       loginUser,
       logout,
       isAdmin,
-      getUsers } = require('../controllers/authCtrl');
+      getUsers,
+      changeRole } = require('../controllers/authCtrl');
 const express = require('express');
 const router = express.Router();
 router.route('/login')
@@ -18,5 +19,6 @@ router.route('/users')
 
 router.route('/manage')
       .get(isAuthenticated, isAdmin, getUsers)
+      .put(isAuthenticated, isAdmin, changeRole);
 
 module.exports = router;

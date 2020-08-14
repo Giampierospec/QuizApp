@@ -93,6 +93,17 @@ const getUsers = async (req, res, next) => {
         res.status(400).send(e);
     }
 }
+const changeRole = async (req, res, next) => {
+    try {
+        const { idUser, role } = req.body;
+        let user = await User.findById(idUser);
+        user.role = role;
+        user = await user.save();
+        res.send(user);
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
 
 
 
@@ -106,5 +117,6 @@ module.exports = {
     createUser,
     logout,
     isAdmin,
-    getUsers
+    getUsers,
+    changeRole
 };

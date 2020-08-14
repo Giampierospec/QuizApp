@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Switch, withRouter} from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import Landing from './Landing';
 import Login from './Login/Login';
 import Register from './Login/Register';
-import {TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import AdminRoute from './AdminRoute';
 import Create from './Quiz/Create';
 import Quiz from './Quiz/Quiz';
@@ -14,8 +14,9 @@ import GetFilledQuizzes from './QuizFill/GetFilledQuizzes';
 import FilledQuizDetail from './QuizFill/FilledQuizDetail';
 import Edit from './Quiz/Edit';
 import Statistics from './Stats/Statistics';
-const Paths = withRouter(({location})=>{
-    return(
+import User from './Management/User';
+const Paths = withRouter(({ location }) => {
+    return (
         <TransitionGroup>
             <CSSTransition
                 key={location.key}
@@ -27,31 +28,34 @@ const Paths = withRouter(({location})=>{
                         <Landing />
                     </PrivateRoute>
                     <PrivateRoute path="/quizFill" exact>
-                        <QuizFill/>
+                        <QuizFill />
                     </PrivateRoute>
                     <PrivateRoute path="/filled" exact>
-                        <GetFilledQuizzes/>
+                        <GetFilledQuizzes />
                     </PrivateRoute>
                     <PrivateRoute path="/filled/:id">
-                        <FilledQuizDetail/>
+                        <FilledQuizDetail />
                     </PrivateRoute>
                     <AdminRoute path="/create">
-                        <Create/>
-                    </AdminRoute>   
+                        <Create />
+                    </AdminRoute>
                     <AdminRoute path="/edit/:id">
-                        <Edit/>
+                        <Edit />
                     </AdminRoute>
                     <AdminRoute path="/quiz" exact>
-                        <Quiz/>
+                        <Quiz />
                     </AdminRoute>
                     <AdminRoute path="/quiz/:id">
-                        <Detail/>
+                        <Detail />
                     </AdminRoute>
                     <AdminRoute path="/stats">
-                        <Statistics/>
+                        <Statistics />
+                    </AdminRoute>
+                    <AdminRoute path="/manage">
+                        <User />
                     </AdminRoute>
                     <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register}/>
+                    <Route path="/register" component={Register} />
                 </Switch>
             </CSSTransition>
 
