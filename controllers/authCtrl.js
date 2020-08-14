@@ -5,25 +5,25 @@ const User = require('../models/User');
  * @param {*} res 
  * @param {*} next 
  */
-const isAuthenticated = async (req,res,next)=>{
-try{
-    const token = req.session.token;
-    const user = await User.findByToken(token);
-    if (!user)
-        return res.status(404).send('User not found');
-    req.user = user.toJSON();
-    next();
+const isAuthenticated = async (req, res, next) => {
+    try {
+        const token = req.session.token;
+        const user = await User.findByToken(token);
+        if (!user)
+            return res.status(404).send('User not found');
+        req.user = user.toJSON();
+        next();
+
+    }
+    catch (e) {
+        return res.status(401).send('Not Logged in');
+    }
 
 }
-catch(e){
-    return res.status(401).send('Not Logged in');
-}
-
-}
-const isAdmin = async (req,res,next)=>{
+const isAdmin = async (req, res, next) => {
     if (req.user.role !== 'admin')
         return res.status(401).send('Not an admin to enter this view');
-        
+
     next();
 }
 /**
@@ -32,22 +32,22 @@ const isAdmin = async (req,res,next)=>{
  * @param {*} res 
  * @param {*} next 
  */
-const loginUser = async (req,res,next)=>{
-    try{
-        const {email, password} = req.body;
-        if(req.session.token)
+const loginUser = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        if (req.session.token)
             return res.status(405).send('Already logged in');
-        
-        const user = await User.findByCredentials(email,password);
+
+        const user = await User.findByCredentials(email, password);
         req.session.token = await user.generateAuthToken();
         return res.send(user.toJSON());
 
     }
-    catch(e){
+    catch (e) {
         return res.status(400).send(e);
     }
 };
-const logout = (req,res,next)=>{
+const logout = (req, res, next) => {
     req.session = null;
     return res.send(null);
 };
@@ -57,11 +57,11 @@ const logout = (req,res,next)=>{
  * @param {*} res 
  * @param {*} next 
  */
-const createUser = async(req,res,next)=>{
+const createUser = async (req, res, next) => {
     try {
         const { email, name, password } = req.body;
         let user = await User.findOne({ email });
-        if(user)
+        if (user)
             return res.status(400).send('User already exists');
         user = new User({
             name,
@@ -79,9 +79,20 @@ const createUser = async(req,res,next)=>{
  * @param {*} res 
  * @param {*} next 
  */
-const getCurrentUser = (req,res,next)=>{
+const getCurrentUser = (req, res, next) => {
     res.send(req.user);
 };
+
+const getUsers = async (req, res, next) => {
+    try {
+        res.send(await User.find({}).select({
+            name: 1,
+            email: 1
+        }));
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
 
 
 
@@ -94,5 +105,6 @@ module.exports = {
     loginUser,
     createUser,
     logout,
-    isAdmin
+    isAdmin,
+    getUsers
 };
