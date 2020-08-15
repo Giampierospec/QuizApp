@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 import { getStat, generateRandomColor } from '../../utils/statUtil';
-import { random } from 'lodash';
 class FilledQuestionStats extends Component {
     constructor(props) {
         super(props);
