@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { faHeading, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { renderField, renderFields, validate } from '../../utils/createQuiz.util';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Question from './Question';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {connect} from 'react-redux';
-import {getQuiz, resetQuiz} from '../../actions';
+import { connect } from 'react-redux';
+import { getQuiz, resetQuiz } from '../../actions';
 class QuizForm extends Component {
-    async componentDidMount(){
-        const {quizId} = this.props;
+    async componentDidMount() {
+        const { quizId } = this.props;
         if (quizId)
             await this.props.getQuiz(quizId);
         else
@@ -23,7 +23,7 @@ class QuizForm extends Component {
                     <div className="col-sm-8 offset-sm-2">
                         <div className="card">
                             <div className="card-header bg-secondary text-white">
-                            <h4 className="card-title text-center">{this.props.title}</h4>
+                                <h4 className="card-title text-center">{this.props.title}</h4>
                             </div>
                             <div className="card-body">
                                 {renderField({
@@ -43,8 +43,8 @@ class QuizForm extends Component {
                                 )}
                             </div>
                             <div className="card-footer">
-                                <Link to='/' className="btn btn-info float-left"><FontAwesomeIcon icon={faTimes}/> Cancel</Link>
-                                <button className="btn btn-primary float-right" type="submit" disabled={submitting}><FontAwesomeIcon icon={faSearch}/> Review</button>
+                                <Link to='/quiz' className="btn btn-info float-left"><FontAwesomeIcon icon={faTimes} /> Cancel</Link>
+                                <button className="btn btn-primary float-right" type="submit" disabled={submitting}><FontAwesomeIcon icon={faSearch} /> Review</button>
                             </div>
                         </div>
                     </div>
@@ -58,11 +58,11 @@ const FormQuiz = reduxForm({
     form: 'quizForm',
     destroyOnUnmount: false,
     validate,
-    enableReinitialize:true
+    enableReinitialize: true
 })(QuizForm);
 
-const mapStateToProps = ({quiz})=>({initialValues:quiz[0]});
+const mapStateToProps = ({ quiz }) => ({ initialValues: quiz[0] });
 
-export default connect(mapStateToProps,{getQuiz, resetQuiz})(FormQuiz);
+export default connect(mapStateToProps, { getQuiz, resetQuiz })(FormQuiz);
 
 

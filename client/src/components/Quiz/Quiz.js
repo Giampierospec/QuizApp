@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getQuizzes } from '../../actions';
 import Loading from '../Loading';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 class Quiz extends Component {
     state = { loading: true };
     async componentDidMount() {
@@ -50,6 +52,8 @@ class Quiz extends Component {
         else
             return (
                 <div className="margin-from-top">
+                    <h4 className="text-center">Available Quizzes <Link to="/create" className="btn btn-primary float-right"><FontAwesomeIcon icon={faPlus} /></Link></h4>
+                    <hr />
                     {this.renderQuizzes()}
                 </div>
             )
