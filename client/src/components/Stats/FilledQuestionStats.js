@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 import { getStat, generateRandomColor } from '../../utils/statUtil';
+import { random } from 'lodash';
 class FilledQuestionStats extends Component {
     constructor(props) {
         super(props);
@@ -29,13 +30,13 @@ class FilledQuestionStats extends Component {
                 datasets: Object
                     .keys(this.state.questions)
                     .map((k) => {
-                        const backgroundColor = generateRandomColor();
+                        const randomColor = generateRandomColor();
                         return {
                             label: k,
-                            data: [this.state.questions[k].length, 
-                            this.state.questions[k].filter((question)=>question.answer.correct).length, 
-                                this.state.questions[k].filter((question) => !question.answer.correct).length,],
-                            backgroundColor: [backgroundColor,backgroundColor,backgroundColor]
+                            data: [this.state.questions[k].length,
+                            this.state.questions[k].filter((question) => question.answer.correct).length,
+                            this.state.questions[k].filter((question) => !question.answer.correct).length,],
+                            backgroundColor: [randomColor, randomColor, randomColor]
                         }
                     })
             }
@@ -47,13 +48,13 @@ class FilledQuestionStats extends Component {
         if (title) {
             const { data } = await getStat(`/api/titleStats?title=${title}`);
             this.setState({ questions: data })
-            this.renderContext(); 
+            this.renderContext();
         }
 
-            
 
 
-        
+
+
     }
     setTitles = () => {
         return (
