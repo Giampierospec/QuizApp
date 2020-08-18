@@ -4,7 +4,7 @@ import { getQuizzes } from '../../actions';
 import Loading from '../Loading';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faAngleLeft, faAngleRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 class Quiz extends Component {
     state = { loading: true, page: 1 };
     async componentDidMount() {
@@ -48,6 +48,10 @@ class Quiz extends Component {
             pages.push(<li className="page-item" key={i} onClick={() => { this.callApi(i) }}><button className="page-link">{i}</button></li>);
         return pages;
     }
+    setFirst = async () => {
+        if (this.state.page !== this.props.pagination.startPage)
+            await this.callApi(this.props.pagination.startPage);
+    }
     setPrevious = async () => {
         if (this.state.page !== this.props.pagination.startPage)
             await this.callApi(this.state.page - 1);
@@ -55,6 +59,10 @@ class Quiz extends Component {
     setNext = async () => {
         if (this.state.page !== this.props.pagination.endPage)
             await this.callApi(this.state.page + 1)
+    }
+    setLast = async () => {
+        if (this.state.page !== this.props.pagination.endPage)
+            await this.callApi(this.props.pagination.endPage);
     }
     renderPagination = () => {
         const { startPage, endPage, totalPages } = this.props.pagination;
@@ -64,9 +72,19 @@ class Quiz extends Component {
             <p>page {this.state.page} of {totalPages}</p>
             <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-center">
-                    <li class={`page-item ${(prevCond) ? 'disabled' : ''}`}><button className="page-link" disabled={prevCond} onClick={this.setPrevious}>Previous</button></li>
+                    <li className={`page-item ${(prevCond) ? 'disabled' : ''}`}>
+                        <button className="page-link" disabled={prevCond} onClick={this.setFirst}><FontAwesomeIcon icon={faAngleDoubleLeft} /></button>
+                    </li>
+                    <li className={`page-item ${(prevCond) ? 'disabled' : ''}`}>
+                        <button className="page-link" disabled={prevCond} onClick={this.setPrevious}><FontAwesomeIcon icon={faAngleLeft} /></button>
+                    </li>
                     {this.renderPages()}
-                    <li class={`page-item ${(nextCond) ? 'disabled' : ''}`} ><button className="page-link" disabled={nextCond} onClick={this.setNext}>Next</button></li>
+                    <li className={`page-item ${(nextCond) ? 'disabled' : ''}`} >
+                        <button className="page-link" disabled={nextCond} onClick={this.setNext}><FontAwesomeIcon icon={faAngleRight} /></button>
+                    </li>
+                    <li className={`page-item ${(nextCond) ? 'disabled' : ''}`} >
+                        <button className="page-link" disabled={nextCond} onClick={this.setLast}><FontAwesomeIcon icon={faAngleDoubleRight} /></button>
+                    </li>
                 </ul>
             </nav>
         </div>)
