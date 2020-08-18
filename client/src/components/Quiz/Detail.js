@@ -61,6 +61,6 @@ class Detail extends Component {
     }
 }
 
-const mapStateToProps = ({ quiz }) => ({ quiz: quiz[0] });
+const mapStateToProps = ({ quiz }) => ({ quiz: quiz });
 
 export default connect(mapStateToProps, { getQuiz })(withRouter(Detail));

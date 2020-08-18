@@ -1,6 +1,6 @@
-import {CREATE_QUIZ, GET_QUIZZES, GET_QUIZ} from '../actions/types';
-export default (state=[],action)=>{
-    switch(action.type){
+import { CREATE_QUIZ, GET_QUIZZES, GET_QUIZ } from '../actions/types';
+export default (state = {}, action) => {
+    switch (action.type) {
         case GET_QUIZZES:
             return action.payload;
         case CREATE_QUIZ:

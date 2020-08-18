@@ -54,6 +54,6 @@ class FilledQuizDetail extends Component {
     }
 }
 
-const mapStateToProps = ({ quizFill }) => ({ quizFill: quizFill[0] })
+const mapStateToProps = ({ quizFill }) => ({ quizFill: quizFill })
 
 export default connect(mapStateToProps, { getFilledQuiz })(withRouter(FilledQuizDetail));

@@ -61,7 +61,7 @@ const FormQuiz = reduxForm({
     enableReinitialize: true
 })(QuizForm);
 
-const mapStateToProps = ({ quiz }) => ({ initialValues: quiz[0] });
+const mapStateToProps = ({ quiz }) => ({ initialValues: quiz });
 
 export default connect(mapStateToProps, { getQuiz, resetQuiz })(FormQuiz);
 

@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 class Quiz extends Component {
-    state = { loading: true };
+    state = { loading: true, page: 1 };
     async componentDidMount() {
         await this.props.getQuizzes();
         this.setState({ loading: false });
     }
     renderQuizzes = () => {
         return this.props.quiz.map(q => {
-            return (<div className="row" key={q._id}>
-                <div className="col-sm-8 offset-sm-2">
+            return (
+                <div className="col-sm-4" key={q._id}>
                     <div className="card text-center">
                         <div className="card-header bg-secondary text-white">
                             <h4 className="card-title">{q.title}</h4>
@@ -32,10 +32,45 @@ class Quiz extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>);
+                </div>);
         })
     };
+    callApi = async (page) => {
+        this.setState({ loading: true, page });
+        await this.props.getQuizzes(page);
+        this.setState({ loading: false });
+
+    }
+    renderPages = () => {
+        const pages = [];
+        const { startPage, endPage } = this.props.pagination;
+        for (let i = startPage; i <= endPage; i++)
+            pages.push(<li className="page-item" key={i} onClick={() => { this.callApi(i) }}><button className="page-link">{i}</button></li>);
+        return pages;
+    }
+    setPrevious = async () => {
+        if (this.state.page !== this.props.pagination.startPage)
+            await this.callApi(this.state.page - 1);
+    }
+    setNext = async () => {
+        if (this.state.page !== this.props.pagination.endPage)
+            await this.callApi(this.state.page + 1)
+    }
+    renderPagination = () => {
+        const { startPage, endPage, totalPages } = this.props.pagination;
+        const prevCond = this.state.page === startPage;
+        const nextCond = this.state.page === endPage;
+        return (<div className="text-center">
+            <p>page {this.state.page} of {totalPages}</p>
+            <nav aria-label="Page navigation example">
+                <ul className="pagination justify-content-center">
+                    <li class={`page-item ${(prevCond) ? 'disabled' : ''}`}><button className="page-link" disabled={prevCond} onClick={this.setPrevious}>Previous</button></li>
+                    {this.renderPages()}
+                    <li class={`page-item ${(nextCond) ? 'disabled' : ''}`} ><button className="page-link" disabled={nextCond} onClick={this.setNext}>Next</button></li>
+                </ul>
+            </nav>
+        </div>)
+    }
     render() {
         if (this.state.loading)
             return <Loading msg="Loading Quizzes please wait..." />
@@ -54,11 +89,17 @@ class Quiz extends Component {
                 <div className="margin-from-top">
                     <h4 className="text-center">Available Quizzes <Link to="/create" className="btn btn-primary float-right"><FontAwesomeIcon icon={faPlus} /></Link></h4>
                     <hr />
-                    {this.renderQuizzes()}
+                    <h5 className="text-center">Showing {this.props.quiz.length} of {this.props.pagination.totalItems}</h5>
+                    <br />
+                    <div className="row">
+                        {this.renderQuizzes()}
+                    </div>
+                    <br />
+                    {this.renderPagination()}
                 </div>
             )
     }
 }
-const mapStateToProps = ({ quiz }) => ({ quiz });
+const mapStateToProps = ({ quiz }) => ({ quiz: quiz.items, pagination: quiz });
 
 export default connect(mapStateToProps, { getQuizzes })(Quiz);
