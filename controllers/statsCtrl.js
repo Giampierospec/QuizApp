@@ -6,7 +6,7 @@ const _ = require('lodash');
 const mapUser = async (item = {}) => {
     const user = await User.findById(item._id);
     return {
-        _id: user.name,
+        _id: user.email,
         count: item.count
     };
 }
@@ -64,7 +64,7 @@ const getQuestions = async (req, res, next) => {
 const getTitles = async (req, res, next) => {
     try {
         const titles = await QuizFill.find({}).select('title');
-        res.send(titles);
+        res.send(titles.map(({ title }) => title).filter((x, i, a) => a.indexOf(x) === i));
     } catch (e) {
         res.status(400).send(e);
     }

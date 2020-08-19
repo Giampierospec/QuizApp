@@ -60,7 +60,7 @@ class FilledQuestionStats extends Component {
             <div className="col-sm-6 offset-sm-3">
                 <select className="form-control" defaultValue="" onChange={this.onSelect} ref={this.selectRef}>
                     <option value="">Pick a Quiz</option>
-                    {this.state.titles.map(({ title }, i) => <option value={title} key={i}>{title}</option>)}
+                    {this.state.titles.map((title, i) => <option value={title} key={i}>{title}</option>)}
                 </select>
             </div>
         );
