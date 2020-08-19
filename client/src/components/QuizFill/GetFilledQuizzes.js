@@ -4,7 +4,7 @@ import { getFilledQuizzes, deleteFilledQuiz } from '../../actions';
 import Loading from '../Loading';
 import { Link } from 'react-router-dom';
 import DeleteModal from './ModalDelete';
-import { faTrash, faAngleDoubleLeft, faAngleLeft, faAngleRight, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faAngleDoubleLeft, faAngleLeft, faAngleRight, faAngleDoubleRight, faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class GetFilledQuizzes extends Component {
     state = { loading: true, showDelete: false, quiz: {}, page: 1 }
@@ -106,7 +106,7 @@ class GetFilledQuizzes extends Component {
             return (
                 <div>
                     <div className="margin-from-top">
-                        <h4 className="text-center">Quizzes Filled By {this.props.auth.name}</h4>
+                        <h4 className="text-center">Quizzes Filled By {this.props.auth.name} <Link to='/quizFill' className="btn btn-primary float-right"><FontAwesomeIcon icon={faFileSignature} /></Link></h4>
                         <hr />
                         <h5 className="text-center">Showing {this.props.quizFill.length} of {this.props.pagination.totalItems}</h5>
                         <br />

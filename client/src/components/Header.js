@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle, faUser, faChartPie, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUser, faChartPie, faTasks, faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { logoutUser } from '../actions';
 import _ from 'lodash';
 class Header extends Component {
@@ -21,10 +21,9 @@ class Header extends Component {
             }
 
             return authArray.concat([
-                <button key={3} className="btn btn-primary" onClick={this.logout}>Logout</button>,
-                <Link key={4} className="nav-item nav-link" to="/quizFill"> Fill Quiz</Link>,
-                <Link key={5} className="nav-item nav-link" to="/filled"> Filled Quizzes</Link>,
-                <span key={6} className="navbar-text float-right"><FontAwesomeIcon icon={faUser} /> {this.props.auth.name}</span>
+                <Link key={3} className="nav-item nav-link" to="/filled"> <FontAwesomeIcon icon={faFileSignature} /> Filled Quizzes</Link>,
+                <span key={4} className="navbar-text float-right"><FontAwesomeIcon icon={faUser} /> {this.props.auth.name}</span>,
+                <button key={5} className="btn btn-primary" onClick={this.logout}>Logout</button>
             ]);
 
         }
