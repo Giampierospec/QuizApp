@@ -20,6 +20,7 @@ export const fetchUser = () => async dispatch => {
     }
     catch (e) {
         renderError(e);
+        dispatch({ type: types.FETCH_USER, payload: {} });
     }
 };
 export const loginUser = (values, history) => async dispatch => {
