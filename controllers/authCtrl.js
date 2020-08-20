@@ -1,4 +1,8 @@
 const User = require('../models/User');
+const ACCEPTED = [
+    'admin',
+    'super'
+];
 /**
  * Check if user is authenticated
  * @param {*} req 
@@ -21,8 +25,15 @@ const isAuthenticated = async (req, res, next) => {
 
 }
 const isAdmin = async (req, res, next) => {
-    if (req.user.role !== 'admin')
-        return res.status(401).send('Not an admin to enter this view');
+    if (ACCEPTED.some(role => role === req.user.role))
+        return next();
+
+    return res.status(401).send('Not an admin to enter this view');
+
+}
+const isSuperUser = async (req, res, next) => {
+    if (req.user.role !== 'super')
+        return res.status(401).send('Not a super user to enter this view');
 
     next();
 }
@@ -118,5 +129,6 @@ module.exports = {
     logout,
     isAdmin,
     getUsers,
-    changeRole
+    changeRole,
+    isSuperUser
 };

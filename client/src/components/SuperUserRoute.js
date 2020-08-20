@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ACCEPTED } from '../utils/acceptRoles';
-class AdminRoute extends Component {
+class SuperUserRoute extends Component {
     render() {
         const { path, children, auth, exact } = this.props;
         return (
@@ -10,7 +9,7 @@ class AdminRoute extends Component {
                 path={path}
                 exact={exact}
                 render={() =>
-                    ((ACCEPTED.some(role => role === auth.role)))
+                    ((auth.role === 'super'))
                         ? (children) : (
                             <Redirect to={
                                 {
@@ -29,4 +28,4 @@ class AdminRoute extends Component {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps)(AdminRoute);
+export default connect(mapStateToProps)(SuperUserRoute);

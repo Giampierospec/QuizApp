@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faUser, faChartPie, faTasks, faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { logoutUser } from '../actions';
 import _ from 'lodash';
+import { ACCEPTED } from '../utils/acceptRoles';
 class Header extends Component {
     logout = () => {
         this.props.logoutUser();
@@ -12,7 +13,7 @@ class Header extends Component {
     renderIfLogged = () => {
         if (!_.isEmpty(this.props.auth)) {
             let authArray = [];
-            if (this.props.auth.role === 'admin') {
+            if (ACCEPTED.some(role => role === this.props.auth.role)) {
                 authArray = [
                     <Link to="/quiz" key={0} className="nav-item nav-link"><FontAwesomeIcon icon={faQuestionCircle} /> Quiz</Link>,
                     <Link to="/stats" key={1} className="nav-item nav-link"><FontAwesomeIcon icon={faChartPie} /> stats</Link>,

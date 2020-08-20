@@ -5,7 +5,8 @@ const { createUser,
       logout,
       isAdmin,
       getUsers,
-      changeRole } = require('../controllers/authCtrl');
+      changeRole,
+      isSuperUser } = require('../controllers/authCtrl');
 const express = require('express');
 const router = express.Router();
 router.route('/login')
@@ -18,7 +19,7 @@ router.route('/users')
       .post(createUser);
 
 router.route('/manage')
-      .get(isAuthenticated, isAdmin, getUsers)
-      .put(isAuthenticated, isAdmin, changeRole);
+      .get(isAuthenticated, isSuperUser, getUsers)
+      .put(isAuthenticated, isSuperUser, changeRole);
 
 module.exports = router;

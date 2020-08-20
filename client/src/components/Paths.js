@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import Landing from './Landing';
@@ -15,7 +15,11 @@ import FilledQuizDetail from './QuizFill/FilledQuizDetail';
 import Edit from './Quiz/Edit';
 import Statistics from './Stats/Statistics';
 import User from './Management/User';
+import SuperUserRoute from './SuperUserRoute';
 const Paths = withRouter(({ location }) => {
+    useEffect(() => {
+
+    })
     return (
         <TransitionGroup>
             <CSSTransition
@@ -51,9 +55,9 @@ const Paths = withRouter(({ location }) => {
                     <AdminRoute path="/stats">
                         <Statistics />
                     </AdminRoute>
-                    <AdminRoute path="/manage">
+                    <SuperUserRoute path="/manage">
                         <User />
-                    </AdminRoute>
+                    </SuperUserRoute>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                 </Switch>
