@@ -96,7 +96,7 @@ const getCurrentUser = (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
     try {
-        res.send(await User.find({}).select({
+        res.send(await User.find({ role: { $ne: 'super' } }).select({
             name: 1,
             email: 1
         }));
