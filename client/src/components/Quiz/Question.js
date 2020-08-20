@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faQuestionCircle, faBraille , faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faQuestionCircle, faBraille, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Answer from './Answer';
 import { renderField, renderFields } from '../../utils/createQuiz.util';
 
-class Question extends Component{
-    renderQuestions(){
-        const { fields, meta: { error}} = this.props; 
+class Question extends Component {
+    renderQuestions() {
+        const { fields, meta: { error } } = this.props;
         return (<div>
             <h5 className="card-text">Questions <button className="btn btn-primary float-right" type="button" onClick={() => fields.push({})}><FontAwesomeIcon icon={faPlus} /></button></h5>
             <span className="text-danger">{error}</span>
-            <hr/>
-            {fields.map((question,index)=>{
-                return(
+            <hr />
+            {fields.map((question, index) => {
+                return (
                     <div key={index}>
                         {renderField({
                             name: `${question}.question`,
@@ -32,21 +32,21 @@ class Question extends Component{
                         })}
                         <button className="btn btn-danger float-right" type="button" onClick={() => fields.remove(index)}><FontAwesomeIcon icon={faTrash} /></button>
                         <br />
-                        <br/>
+                        <br />
                         {renderFields({
-                            name:`${question}.options`,
-                            component:Answer,
-                            questIndex:index
+                            name: `${question}.options`,
+                            component: Answer,
+                            questIndex: index
                         })}
                         <hr />
                     </div>
                 );
             })}
             <br />
-            
+
         </div>);
     }
-    render(){
+    render() {
         return (this.renderQuestions())
     }
 }

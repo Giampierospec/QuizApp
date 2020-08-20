@@ -143,6 +143,6 @@ export const deleteFilledQuiz = (id) => async dispatch => {
 export const resetQuiz = () => {
     return {
         type: types.GET_QUIZ,
-        payload: []
+        payload: {}
     }
 };

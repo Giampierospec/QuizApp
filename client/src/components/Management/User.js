@@ -25,7 +25,6 @@ class User extends Component {
         const { data } = await getStat('/api/manage');
         this.options = data;
         this.setState({ loading: false });
-        console.log(this.options);
     }
     submitForm = async (values) => {
         this.setState({ loading: true });
