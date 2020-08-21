@@ -4,7 +4,7 @@ export default (state = {}, action) => {
         case GET_QUIZZES:
             return action.payload;
         case CREATE_QUIZ:
-            return state.concat(action.payload);
+            return action.payload;
         case GET_QUIZ:
             return action.payload;
         default:

@@ -12,8 +12,6 @@ class QuizForm extends Component {
         const { quizId } = this.props;
         if (quizId)
             await this.props.getQuiz(quizId);
-        else
-            this.props.resetQuiz();
     }
     render() {
         const { submitting } = this.props;
