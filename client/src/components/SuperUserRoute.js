@@ -3,11 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 class SuperUserRoute extends Component {
     render() {
-        const { path, children, auth, exact } = this.props;
+        const { path, children, auth, ...rest } = this.props;
         return (
             <Route
-                path={path}
-                exact={exact}
+                {...rest}
                 render={() =>
                     ((auth.role === 'super'))
                         ? (children) : (

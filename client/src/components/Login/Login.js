@@ -1,26 +1,28 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import LoginForm from './LoginForm';
-import {loginUser, fetchUser} from '../../actions';
+import { loginUser, fetchUser } from '../../actions';
 import Loading from '../Loading';
 class Login extends Component {
-    state ={loading:false}
-     async componentDidMount(){
-         this.setState({loading:true});
-         await this.props.fetchUser();
-         this.setState({loading:false});
-        if(!_.isEmpty(this.props.auth))
-            this.props.history.replace(this.props.location.state.from);
+    state = { loading: false }
+    async componentDidMount() {
+        this.setState({ loading: true });
+        await this.props.fetchUser();
+        this.setState({ loading: false });
+        if (!_.isEmpty(this.props.auth)) {
+            let { from } = this.props.location.state || { from: { pathname: '/' } };
+            this.props.history.replace(from);
+        }
 
     }
     submitLogin = async (values) => {
-        this.setState({loading:true});
-        await this.props.loginUser(values,this.props.history);
-        this.setState({loading:false});
+        this.setState({ loading: true });
+        await this.props.loginUser(values, this.props.history);
+        this.setState({ loading: false });
     }
-    renderContent = ()=>{
+    renderContent = () => {
         return (<div className="margin-from-top">
             <div className="row">
                 <div className="col-sm-8 offset-sm-2">
@@ -41,13 +43,13 @@ class Login extends Component {
             </div>
         </div>);
     }
-    render(){
-       if(this.state.loading)
-            return <Loading msg="Loading please wait..."/>
+    render() {
+        if (this.state.loading)
+            return <Loading msg="Loading please wait..." />
         else
             return this.renderContent()
     }
 }
-const mapStateToProps = ({auth})=>({auth});
-export default connect(mapStateToProps,{loginUser, fetchUser})(Login);
+const mapStateToProps = ({ auth }) => ({ auth });
+export default connect(mapStateToProps, { loginUser, fetchUser })(withRouter(Login));
 

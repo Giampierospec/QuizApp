@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 class PrivateRoute extends Component {
     render() {
-        const { path, children, auth, exact } = this.props;
+        const { path, children, auth, ...rest } = this.props;
         return (
             <Route
-                path={path}
-                exact={exact}
+                {...rest}
                 render={() =>
                     !_.isEmpty(auth) ? (children) : (
                         <Redirect to={{
