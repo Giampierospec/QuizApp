@@ -14,10 +14,11 @@ class App extends Component {
       <div className="container-fluid">
         <BrowserRouter>
           <Header />
-          <div className="klaviyo-form-TKYgfy"></div>
+
           <Paths />
         </BrowserRouter>
         <br />
+        <div className="klaviyo-form-TKYgfy"></div>
       </div>
     )
   }
